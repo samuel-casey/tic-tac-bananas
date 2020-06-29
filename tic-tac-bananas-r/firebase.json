@@ -8,7 +8,7 @@
     ]
   },
   "hosting": {
-    "public": "Tic-Tac-Bananas/tic-tac-bananas-r/public",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -17,7 +17,7 @@
   },
   "emulators": {
     "functions": {
-      "port": 5001
+      "port": 5020
     },
     "database": {
       "port": 9000
