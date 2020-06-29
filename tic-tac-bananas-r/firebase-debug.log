@@ -1,0 +1,144 @@
+[debug] [2020-06-29T17:48:10.212Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:48:10.216Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-06-29T17:48:10.216Z] CLI Version:   8.0.3
+[debug] [2020-06-29T17:48:10.217Z] Platform:      win32
+[debug] [2020-06-29T17:48:10.217Z] Node Version:  v12.14.1
+[debug] [2020-06-29T17:48:10.218Z] Time:          Mon Jun 29 2020 13:48:10 GMT-0400 (Eastern Daylight Time)
+[debug] [2020-06-29T17:48:10.219Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:48:10.219Z] 
+[debug] [2020-06-29T17:48:10.228Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-29T17:48:10.229Z] > authorizing via signed-in user
+[debug] [2020-06-29T17:48:10.229Z] [iam] checking project tic-tac-bananas for permissions ["firebase.projects.get"]
+[debug] [2020-06-29T17:48:10.236Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/tic-tac-bananas:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-06-29T17:48:10.472Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:49:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=72","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-29T17:48:10.474Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas  
+ 
+[debug] [2020-06-29T17:48:10.799Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:49:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from 'C:\Tic-Tac-Bananas\tic-tac-bananas-r'...
+[info] 
+[debug] [2020-06-29T17:48:10.807Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas/webApps/-/config  
+ 
+[debug] [2020-06-29T17:48:11.257Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:49:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions" for Cloud Functions...
+[debug] [2020-06-29T17:48:11.870Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-06-29T17:48:11.871Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-06-29T17:48:11.871Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-06-29T17:48:11.873Z] [worker-~diagnostic~-4f8b1710-5366-46ef-ae39-fd7999081adb]: Assigning socketPath: \\?\pipe\C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions\22672 
+[debug] [2020-06-29T17:48:11.873Z] [worker-~diagnostic~-4f8b1710-5366-46ef-ae39-fd7999081adb]: BUSY 
+[debug] [2020-06-29T17:48:12.865Z] [runtime-status] [22672] Functions runtime initialized. {"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","node_version":"12.14.1"} 
+[debug] [2020-06-29T17:48:12.868Z] [runtime-status] [22672] Disabled runtime features: undefined 
+[debug] [2020-06-29T17:48:12.874Z] [runtime-status] [22672] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
+[debug] [2020-06-29T17:48:12.876Z] [runtime-status] [22672] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-06-29T17:48:12.878Z] [runtime-status] [22672] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-06-29T17:48:12.946Z] [runtime-status] [22672] Checked functions.config() {"config":{}} 
+[debug] [2020-06-29T17:48:12.947Z] [runtime-status] [22672] Error in handleMessage: {"frb":{"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","projectId":"tic-tac-bananas","triggerId":"","emulators":{},"socketPath":"\\\\?\\pipe\\C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\22672"},"opts":{"nodeBinary":"C:\\Program Files\\nodejs\\node.exe"}} => TypeError: Cannot set property config of #<Object> which has only a getter: TypeError: Cannot set property config of #<Object> which has only a getter
+    at C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:455:19
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:5:58)
+    at processTicksAndRejections (internal/process/task_queues.js:94:5) 
+[warn] !  functions: Cannot set property config of #<Object> which has only a getter
+[warn] !  Your function was killed because it raised an unhandled error.
+[debug] [2020-06-29T17:48:12.966Z] [worker-~diagnostic~-4f8b1710-5366-46ef-ae39-fd7999081adb]: exited 
+[debug] [2020-06-29T17:48:12.966Z] [worker-~diagnostic~-4f8b1710-5366-46ef-ae39-fd7999081adb]: FINISHED 
+[debug] [2020-06-29T17:53:00.249Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:53:00.252Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-06-29T17:53:00.252Z] CLI Version:   8.0.3
+[debug] [2020-06-29T17:53:00.253Z] Platform:      win32
+[debug] [2020-06-29T17:53:00.254Z] Node Version:  v12.14.1
+[debug] [2020-06-29T17:53:00.256Z] Time:          Mon Jun 29 2020 13:53:00 GMT-0400 (Eastern Daylight Time)
+[debug] [2020-06-29T17:53:00.256Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:53:00.256Z] 
+[debug] [2020-06-29T17:53:00.266Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-29T17:53:00.267Z] > authorizing via signed-in user
+[debug] [2020-06-29T17:53:00.267Z] [iam] checking project tic-tac-bananas for permissions ["firebase.projects.get"]
+[debug] [2020-06-29T17:53:00.274Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/tic-tac-bananas:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-06-29T17:53:00.495Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:54:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=69","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-29T17:53:00.497Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas  
+ 
+[debug] [2020-06-29T17:53:00.773Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:54:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from 'C:\Tic-Tac-Bananas\tic-tac-bananas-r'...
+[info] 
+[debug] [2020-06-29T17:53:00.784Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas/webApps/-/config  
+ 
+[debug] [2020-06-29T17:53:01.227Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:54:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting: Serving hosting files from: tic-tac-bananas-r/public
+[info] +  hosting: Local server: http://localhost:5000
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions" for Cloud Functions...
+[debug] [2020-06-29T17:53:01.863Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-06-29T17:53:01.864Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-06-29T17:53:01.864Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-06-29T17:53:01.865Z] [worker-~diagnostic~-74ee64f2-3e82-49b6-b9d8-4de604ccbaaf]: Assigning socketPath: \\?\pipe\C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions\26452 
+[debug] [2020-06-29T17:53:01.865Z] [worker-~diagnostic~-74ee64f2-3e82-49b6-b9d8-4de604ccbaaf]: BUSY 
+[debug] [2020-06-29T17:53:02.498Z] [runtime-status] [26452] Functions runtime initialized. {"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","node_version":"12.14.1"} 
+[debug] [2020-06-29T17:53:02.499Z] [runtime-status] [26452] Disabled runtime features: undefined 
+[debug] [2020-06-29T17:53:02.503Z] [runtime-status] [26452] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
+[debug] [2020-06-29T17:53:02.505Z] [runtime-status] [26452] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-06-29T17:53:02.510Z] [runtime-status] [26452] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-06-29T17:53:02.571Z] [runtime-status] [26452] Checked functions.config() {"config":{}} 
+[debug] [2020-06-29T17:53:02.572Z] [runtime-status] [26452] Error in handleMessage: {"frb":{"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","projectId":"tic-tac-bananas","triggerId":"","emulators":{},"socketPath":"\\\\?\\pipe\\C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\26452"},"opts":{"nodeBinary":"C:\\Program Files\\nodejs\\node.exe"}} => TypeError: Cannot set property config of #<Object> which has only a getter: TypeError: Cannot set property config of #<Object> which has only a getter
+    at C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:455:19
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:5:58)
+    at processTicksAndRejections (internal/process/task_queues.js:94:5) 
+[warn] !  functions: Cannot set property config of #<Object> which has only a getter
+[warn] !  Your function was killed because it raised an unhandled error.
+[debug] [2020-06-29T17:53:02.593Z] [worker-~diagnostic~-74ee64f2-3e82-49b6-b9d8-4de604ccbaaf]: exited 
+[debug] [2020-06-29T17:53:02.594Z] [worker-~diagnostic~-74ee64f2-3e82-49b6-b9d8-4de604ccbaaf]: FINISHED 
+[debug] [2020-06-29T17:53:39.982Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:53:39.985Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-06-29T17:53:39.985Z] CLI Version:   8.0.3
+[debug] [2020-06-29T17:53:39.985Z] Platform:      win32
+[debug] [2020-06-29T17:53:39.985Z] Node Version:  v12.14.1
+[debug] [2020-06-29T17:53:39.987Z] Time:          Mon Jun 29 2020 13:53:39 GMT-0400 (Eastern Daylight Time)
+[debug] [2020-06-29T17:53:39.987Z] ----------------------------------------------------------------------
+[debug] [2020-06-29T17:53:39.987Z] 
+[debug] [2020-06-29T17:53:40.000Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-29T17:53:40.000Z] > authorizing via signed-in user
+[debug] [2020-06-29T17:53:40.001Z] [iam] checking project tic-tac-bananas for permissions ["firebase.projects.get"]
+[debug] [2020-06-29T17:53:40.005Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/tic-tac-bananas:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-06-29T17:53:40.343Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:55:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=149","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-06-29T17:53:40.353Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas  
+ 
+[debug] [2020-06-29T17:53:40.669Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:55:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from 'C:\Tic-Tac-Bananas\tic-tac-bananas-r'...
+[info] 
+[debug] [2020-06-29T17:53:40.688Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/tic-tac-bananas/webApps/-/config  
+ 
+[debug] [2020-06-29T17:53:41.118Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 29 Jun 2020 17:55:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting: Serving hosting files from: Tic-Tac-Bananas/tic-tac-bananas-r/public
+[info] +  hosting: Local server: http://localhost:5000
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions" for Cloud Functions...
+[debug] [2020-06-29T17:53:41.743Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-06-29T17:53:41.743Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-06-29T17:53:41.743Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-06-29T17:53:41.744Z] [worker-~diagnostic~-146e2267-ba16-4081-bd26-c1e81a6f250c]: Assigning socketPath: \\?\pipe\C:\Tic-Tac-Bananas\tic-tac-bananas-r\functions\7768 
+[debug] [2020-06-29T17:53:41.746Z] [worker-~diagnostic~-146e2267-ba16-4081-bd26-c1e81a6f250c]: BUSY 
+[debug] [2020-06-29T17:53:42.402Z] [runtime-status] [7768] Functions runtime initialized. {"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","node_version":"12.14.1"} 
+[debug] [2020-06-29T17:53:42.403Z] [runtime-status] [7768] Disabled runtime features: undefined 
+[debug] [2020-06-29T17:53:42.407Z] [runtime-status] [7768] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.12.1","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
+[debug] [2020-06-29T17:53:42.409Z] [runtime-status] [7768] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
+[debug] [2020-06-29T17:53:42.411Z] [runtime-status] [7768] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
+[debug] [2020-06-29T17:53:42.477Z] [runtime-status] [7768] Checked functions.config() {"config":{}} 
+[debug] [2020-06-29T17:53:42.478Z] [runtime-status] [7768] Error in handleMessage: {"frb":{"cwd":"C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions","projectId":"tic-tac-bananas","triggerId":"","emulators":{},"socketPath":"\\\\?\\pipe\\C:\\Tic-Tac-Bananas\\tic-tac-bananas-r\\functions\\7768"},"opts":{"nodeBinary":"C:\\Program Files\\nodejs\\node.exe"}} => TypeError: Cannot set property config of #<Object> which has only a getter: TypeError: Cannot set property config of #<Object> which has only a getter
+    at C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:455:19
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\scasey5\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:5:58)
+    at processTicksAndRejections (internal/process/task_queues.js:94:5) 
+[warn] !  functions: Cannot set property config of #<Object> which has only a getter
+[warn] !  Your function was killed because it raised an unhandled error.
+[debug] [2020-06-29T17:53:42.502Z] [worker-~diagnostic~-146e2267-ba16-4081-bd26-c1e81a6f250c]: exited 
+[debug] [2020-06-29T17:53:42.502Z] [worker-~diagnostic~-146e2267-ba16-4081-bd26-c1e81a6f250c]: FINISHED 
