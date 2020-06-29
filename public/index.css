@@ -6,7 +6,7 @@ body {
     justify-content: center;
     flex-direction: column;
     background-image: url("https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ");
-    font-family: "consolas";
+    font-family: 'Baloo Thambi 2', cursive;
     background-size: 100vw 100vh;
     margin: 20px;
   }
@@ -90,12 +90,3 @@ button {
     position: absolute;
     top: 162px;
   }
-  
-  /* #blueScore {
-    
-  }
-  
-  #redScore {
-    
-  }
-   */

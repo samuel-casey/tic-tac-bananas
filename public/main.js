@@ -17,8 +17,12 @@ const WINNING_COMBOS = [
     [2,4,6]
 ]
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 function start() {
-    blueScore.addClass("activePlayer")
+    redScore.addClass("activePlayer")
     blueTurn = false
     boxes.forEach( function(box) {
     box.addEventListener('click', handleClick, { once: true })
@@ -34,44 +38,64 @@ function reset(){
         i.classList.remove('red')
      })
      subHeader.innerText = "Get 3 in a row to win!"
+     availableBoxes = []
 }
 
 function handleClick(e) {
-    console.log(`clicked`)
     const box = e.target
-    console.log(box)
-    const currentClass = blueTurn ? RED_CLASS : BLUE_CLASS
+    let currentClass = blueTurn ? BLUE_CLASS : RED_CLASS
     placeBanana(box, currentClass)
     
     if(checkWin(currentClass)) {
         subHeader.innerText = `${currentClass.toUpperCase()} wins!`
-        currentClass = null
+        boxes.forEach( function(box) {
+        box.removeEventListener('click', handleClick, { once: true })
+        })
+    }
+
+    if (checkDraw()) {
+        subHeader.innerText = "It's a draw!"
+        boxes.forEach( function(box) {
+        box.removeEventListener('click', handleClick, { once: true })
+        })
     }
     
-    if (checkDraw(currentClass)) {
-        subHeader.innerText = "It's a draw!"
+    let nextClass
+
+    if (currentClass === 'blue') {
+        nextClass = 'red'
+    } else {
+        nextClass = 'blue'
     }
+
     switchTurns()
+    
+    autoPick(currentClass, nextClass)
+
 }
+
+const filledBoxes = []
 
 function placeBanana(box, currentClass) {
-    box.children[0].classList.remove('hidden')
     box.classList.add(currentClass)
-}
-
-const activePlayer = "border: 1px solid yellow"
-
-function switchTurns() {
-    if (blueTurn == true) {
-        blueTurn = false
-        redScore.removeClass("activePlayer")
-        blueScore.addClass("activePlayer")
-    } else {
-        blueTurn = true
-        blueScore.removeClass("activePlayer")
-        redScore.addClass("activePlayer")
+    box.children[0].classList.remove('hidden')
+    if (!box.classList.contains('hidden')) {
+        filledBoxes.push(box)
     }
 }
+
+function switchTurns() {
+    if (blueTurn == false) {
+        blueTurn = true
+        redScore.removeClass('activePlayer')
+        blueScore.addClass('activePlayer')
+    } else {
+        blueTurn = false
+        redScore.removeClass('activePlayer')
+        blueScore.addClass('activePlayer')
+    }    
+}
+    
 
 function checkWin(currentClass) {
     return WINNING_COMBOS.some(combo => { 
@@ -86,3 +110,79 @@ function checkDraw() {
           return x.classList.contains(BLUE_CLASS) || x.classList.contains(RED_CLASS)
         })
 }
+
+let availableBoxes = []
+let filledBoxIndices = [1]
+let playerScore
+
+function autoPick(currentClass, nextClass) {
+    
+    console.log(availableBoxes)
+    // availableBoxes = []
+
+    boxes.forEach( elem => {
+        if (elem.children[0].classList.contains('hidden') && !availableBoxes.includes(elem.children[0])){
+        availableBoxes.push(elem)
+        }
+    })
+
+    const randomBox = boxes[Math.floor(Math.random() * availableBoxes.length)]
+
+    playerScore = blueTurn ? redScore : blueScore
+
+    // switchActive(playerScore)
+
+    sleep(600).then(() => {
+        randomBox.classList.remove(currentClass)
+        randomBox.classList.add(nextClass)
+        
+        if (!filledBoxes.includes(randomBox)) {
+            randomBox.children[0].classList.remove('hidden')
+            filledBoxes.push(randomBox)
+            if (filledBoxes.length === 0 || filledBoxes.length % 2 === 0) {
+                blueScore[0].classList.remove('activePlayer')
+                redScore[0].classList.remove('activePlayer')
+                redScore[0].classList.add('activePlayer')
+            } else {
+                blueScore[0].classList.remove('activePlayer')
+                redScore[0].classList.remove('activePlayer')
+                blueScore[0].classList.add('activePlayer')
+            }
+        }
+
+        // for (var i in filledBoxIndicies) {
+        //     filledBoxIndices.push(i)
+        //     console.log(`fBI: ${filledBoxIndices}`)
+        // }
+
+        for (var n in filledBoxIndices) {
+        availableBoxes.splice(filledBoxIndices[n], 1)
+        console.log(`avail boxes after splice: ${availableBoxes}`)
+        }
+
+    }).catch(error => console.log(error))
+
+    switchTurns()
+}
+
+
+function switchActive(playerScore) {
+    blueScore[0].classList.remove('activePlayer')
+    redScore[0].classList.remove('activePlayer')
+    playerScore[0].classList.add('activePlayer')
+    switchTurns()
+}
+
+// function changeActive() {
+        
+//     if (blueTurn) {
+//         redScore[0].classList.remove('activePlayer') 
+//         blueScore[0].classList.add('activePlayer')
+        
+//     } else {
+//         blueScore[0].classList.remove('activePlayer') 
+//         redScore[0].classList.add('activePlayer')
+//     }
+    
+//     return blueScore,
+// }
