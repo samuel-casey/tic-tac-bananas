@@ -13,9 +13,11 @@ class App extends React.Component {
     }))
 
     this.state = {
-      history: [{
-        boxes: boxes,
-      }],
+      history: [
+        {
+          boxes: boxes,
+        }
+      ],
       isRedNext: true,
       turnNumber: 0
     }
@@ -23,55 +25,46 @@ class App extends React.Component {
 
   handleClick = (i) => {
 
-    console.log(this.state.history)
-
     const history = this.state.history.slice(0, this.state.turnNumber + 1);
     const current = history[history.length - 1];
     const boxes = current.boxes.slice();
 
-    if (calculateWinner(current.boxes) || current.boxes[i].isFull === true) {
+    if (calculateWinner(boxes) || boxes[i].isFull === true) {
       return;
     }
 
     const next = this.state.isRedNext
 
-    boxes[i].value = '🍌'
-    boxes[i].isFull = true
-    boxes[i].fromTurn = this.state.turnNumber
-    next ? boxes[i].className = 'box blue' : boxes[i].className = 'box red'
+    next ? boxes[i] = {value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue'} : boxes[i] = {value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red'}
+    
+    console.log(boxes[i])
 
     this.setState({
-      history: history.concat([{
-        boxes: boxes,
-      }]),
+      history: history.concat([
+        {
+          boxes: boxes,
+        }
+      ]),
       isRedNext: !next,
       turnNumber: history.length
     })
   }
 
-  goBack = (turn) => {
+  goBack = (move) => {
 
-    const turnArray = [turn]
-    const lastTurn = {
-      number: turnArray.slice()
-    }
+    console.log('BACK')
+    // const history = this.state.history.slice(0, this.state.turnNumber + 1)
+    // const moveArray = [move]
+    // const lastMove = {
+    //   number: moveArray.slice()
+    // }
 
-    console.log('turnArr ' + turnArray)
-    console.log('sliced ' + lastTurn.number)
-
-    const theBox = this.state.history[turn].boxes.find(el => el.fromTurn === lastTurn.number - 1)
-
-    console.log(theBox)
+    // const theBox = history[move].boxes.find(el => el.fromTurn === lastMove.number - 1)
 
     this.setState({
-      turnNumber: turn,
-      isRedNext: (theBox.className === 'box blue') ? true : false,
+      turnNumber: move,
+      isRedNext: (move % 2) === 0
     })
-  }
-
-  handleChange = (e) => {
-    console.log('CHANGE')
-    console.log(e.target)
   }
 
   render() {
@@ -79,7 +72,7 @@ class App extends React.Component {
     const current = history[this.state.turnNumber]
     const winner = calculateWinner(current.boxes);
 
-    const moves = history.map((step, turn) => {
+    const moves = history.map((move, turn) => {
       let desc;
       turn > 0 ? desc = 'undo' + turn : desc = null
 
@@ -102,7 +95,7 @@ class App extends React.Component {
         <div className="instructions">{status}</div>
         <GameBoard
           boxes={current.boxes}
-          onClick={(i) => { this.handleClick(i) }}
+          onClick={i => this.handleClick(i)}
         />
         <div id='undo-container' key='undo-container' className="undo-container">{moves}</div>
       </div>
