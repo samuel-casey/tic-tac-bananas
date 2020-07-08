@@ -1,5 +1,6 @@
 import React from 'react'
 import GameBoard from './GameBoard'
+import UndoBtn from './UndoBtn'
 
 class App extends React.Component {
   constructor(props) {
@@ -35,8 +36,8 @@ class App extends React.Component {
 
     const next = this.state.isRedNext
 
-    next ? boxes[i] = {value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue'} : boxes[i] = {value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red'}
-    
+    next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue' } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red' }
+
     console.log(boxes[i])
 
     this.setState({
@@ -72,6 +73,8 @@ class App extends React.Component {
     const current = history[this.state.turnNumber]
     const winner = calculateWinner(current.boxes);
 
+    console.log(history)
+
     const moves = history.map((move, turn) => {
       let desc;
       turn > 0 ? desc = 'undo' + turn : desc = null
@@ -97,7 +100,9 @@ class App extends React.Component {
           boxes={current.boxes}
           onClick={i => this.handleClick(i)}
         />
-        <div id='undo-container' key='undo-container' className="undo-container">{moves}</div>
+        <div className="undo-container">
+          <UndoBtn onClick={move => this.goBack(move)} value={moves} id='undo-container' key='undo-container' />
+        </div>
       </div>
     )
   }
