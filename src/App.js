@@ -1,6 +1,9 @@
 import React from 'react'
-import GameBoard from './GameBoard'
-import UndoBtn from './UndoBtn'
+import { GameBoard } from './GameBoard'
+// import {UndoBtn} from './UndoBtn'
+import { UndoBtnContainer } from './UndoBtnContainer'
+import { StartMenu } from './StartMenu.js'
+import { RestartBtnContainer } from './RestartBtnContainer.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -20,8 +23,12 @@ class App extends React.Component {
         }
       ],
       isRedNext: true,
-      turnNumber: 0
+      turnNumber: 0,
+      vsBot: null
     }
+    this.handleClick = this.handleClick.bind(this);
+    this.goBack = this.goBack.bind(this)
+    this.restartGame = this.restartGame.bind(this)
   }
 
   handleClick = (i) => {
@@ -51,38 +58,21 @@ class App extends React.Component {
     })
   }
 
-  goBack = (move) => {
-
-    console.log('BACK')
-    // const history = this.state.history.slice(0, this.state.turnNumber + 1)
-    // const moveArray = [move]
-    // const lastMove = {
-    //   number: moveArray.slice()
-    // }
-
-    // const theBox = history[move].boxes.find(el => el.fromTurn === lastMove.number - 1)
-
+  goBack = (btn) => {
     this.setState({
-      turnNumber: move,
-      isRedNext: (move % 2) === 0
+      turnNumber: this.state.turnNumber - 1,
+      isRedNext: !this.state.isRedNext
     })
+  }
+
+  restartGame = () => {
+    return document.location.reload;
   }
 
   render() {
     const history = this.state.history;
     const current = history[this.state.turnNumber]
     const winner = calculateWinner(current.boxes);
-
-    console.log(history)
-
-    const moves = history.map((move, turn) => {
-      let desc;
-      turn > 0 ? desc = 'undo' + turn : desc = null
-
-      return (
-        <div className='undo-btn' key={turn} onClick={() => this.goBack(turn)}>{desc}</div>
-      );
-    });
 
     let status;
     if (winner === 'box blue') {
@@ -92,19 +82,33 @@ class App extends React.Component {
     } else {
       status = this.state.isRedNext ? 'Blue\'s turn' : 'Red\'s turn';
     }
-    return (
-      <div>
-        <div>tic-tac-bananas</div>
-        <div className="instructions">{status}</div>
-        <GameBoard
-          boxes={current.boxes}
-          onClick={i => this.handleClick(i)}
-        />
-        <div className="undo-container">
-          <UndoBtn onClick={move => this.goBack(move)} value={moves} id='undo-container' key='undo-container' />
+
+    if (this.state.turnNumber !== 0) {
+      return (
+        <div>
+          <div>tic-tac-bananas</div>
+          <div className="instructions">{status}</div>
+          <GameBoard
+            boxes={current.boxes}
+            onClick={i => this.handleClick(i)}
+          />
+          <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div id="info-container">
+          <div>tic-tac-bananas</div>
+          <p>Select an option for how you want to play: </p>
+          <StartMenu />
+          <GameBoard
+            boxes={current.boxes}
+            onClick={i => this.handleClick(i)}
+          />
+        </div>
+      )
+    }
   }
 }
 

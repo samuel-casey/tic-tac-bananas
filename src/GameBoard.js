@@ -1,27 +1,35 @@
 import React from 'react'
-import Box from './Box.js'
+import {Box} from './Box.js'
 
-class GameBoard extends React.Component {
-  
+export class GameBoard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(e) {
+    const boxNo = e.target.id
+    this.props.onClick(boxNo)
+  }
+
   showBox(i) {
     return (
       <Box
         fromturn={this.props.boxes[i].fromTurn}
         key={'box_'+i}
+        id={i}
         value={this.props.boxes[i].value}
         className={this.props.boxes[i].className}
-        onClick={() => {this.props.onClick(i)}}
+        onClick={this.handleClick}
       />
     )
-  }
-
-  startOver() {
-    return document.location.reload()
   }
 
   render() {   
     return (
       <div className="game-container">
+        <br></br>
+        <br></br>
         <div className="game-board">
           <div className="board-col-1">
             {this.showBox(0)}
@@ -39,10 +47,8 @@ class GameBoard extends React.Component {
             {this.showBox(8)}
           </div>
         </div>
-        <div className='undo-btn' onClick={() => { this.startOver() }}>Restart Game</div>
       </div>
     )
   }
 }
 
-export default GameBoard

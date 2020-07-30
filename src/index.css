@@ -45,15 +45,16 @@ table {
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-content: center;
 }
 
 .game-board {
   display: grid;
   grid-template: 5fr 1fr 1fr 1fr 1fr 1fr;
   column-gap: 0;
-  width: 10rem;
+  width: 15rem;
   justify-self: center;
-  align-self:center;
+  align-self: center;
 }
 
 .board-col-1 {
@@ -71,16 +72,41 @@ table {
   grid-column: 3;
 }
 
-.undo-btn {
+.btn {
   background-color: gainsboro;
   border-radius: 5%;
   text-align: center;
-  width: find-content;
+  width: 75%;
   box-shadow: 2px 2px gray;
   margin: 3px;
+  align-self: center;
+  font-size: 1rem;
+  font-family: inherit;
 }
 
 .undo-container {
   background-color: pink;
   padding: 5px;
+}
+
+#start-menu {
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+
+#root {
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#info-container {
+  background: rgba(100,255,0,.5);
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

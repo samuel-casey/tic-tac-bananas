@@ -1,17 +1,13 @@
 import React from 'react'
 
-class Box extends React.Component {
-    
-    render() {
+export const Box = (props) => {
       return (
         <button
-        fromturn={this.props.turnNumber}
-        className={this.props.className}
-        onClick={ () => {this.props.onClick()}}>
-          {this.props.value}
+        id={props.id}
+        fromturn={props.turnNumber}
+        className={props.className}
+        onClick={props.onClick}>
+          {props.value}
         </button>
       );
-    }
   }
-
-export default Box
