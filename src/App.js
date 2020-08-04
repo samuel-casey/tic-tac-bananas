@@ -1,19 +1,19 @@
 import React from 'react'
-import { GameBoard } from './GameBoard'
-// import {UndoBtn} from './UndoBtn'
-import { UndoBtnContainer } from './UndoBtnContainer'
-import { StartMenu } from './StartMenu.js'
-import { RestartBtnContainer } from './RestartBtnContainer.js'
+import { GameBoard } from './Components/GameBoard'
+import { UndoBtnContainer } from './Containers/UndoBtnContainer'
+import { StartMenu } from './Containers/StartMenu.js'
+import { RestartBtnContainer } from './Containers/RestartBtnContainer.js'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    const boxes = Array(9).fill(null).map(() => ({
+    const boxes = Array(9).fill(null).map((index) => ({
       value: null,
       className: 'box ',
       isFull: false,
-      fromTurn: null
+      fromTurn: null,
+      boxNo: index
     }))
 
     this.state = {
@@ -24,14 +24,17 @@ class App extends React.Component {
       ],
       isRedNext: true,
       turnNumber: 0,
-      vsBot: null
+      botGame: null
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePlayerClick = this.handlePlayerClick.bind(this);
     this.goBack = this.goBack.bind(this)
     this.restartGame = this.restartGame.bind(this)
+    this.vsBot = this.vsBot.bind(this)
+    this.vsPlayer = this.vsPlayer.bind(this)
+    this.autoPick = this.autoPick.bind(this)
   }
 
-  handleClick = (i) => {
+  handlePlayerClick = (i) => {
 
     const history = this.state.history.slice(0, this.state.turnNumber + 1);
     const current = history[history.length - 1];
@@ -43,9 +46,68 @@ class App extends React.Component {
 
     const next = this.state.isRedNext
 
-    next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue' } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red' }
+    next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: i } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: i }
 
-    console.log(boxes[i])
+    this.setState({
+      history: history.concat([
+        {
+          boxes: boxes,
+        }
+      ]),
+      isRedNext: !next,
+      turnNumber: history.length
+    })
+  }
+
+  handleBotClick = (i) => {
+    const history = this.state.history.slice(0, this.state.turnNumber + 1);
+    const current = history[history.length - 1];
+    const boxes = current.boxes.slice();
+    const next = this.state.isRedNext
+
+    if (calculateWinner(boxes) || boxes[i].isFull === true) {
+      return;
+    }
+
+    boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: i }
+
+    this.setState({
+      history: history.concat([
+        {
+          boxes: boxes,
+        }
+      ]),
+      isRedNext: !next,
+      turnNumber: history.length
+    })
+  }
+
+  autoPick = () => {
+    const history = this.state.history.slice(0, this.state.turnNumber + 1);
+    const current = history[history.length - 1];
+    const boxes = current.boxes.slice();
+    const next = this.state.isRedNext;
+
+    let filledBoxes = [];
+    let emptyBoxes = [];
+    
+    boxes.forEach((box) => {
+      if (box.isFull == true) {
+        filledBoxes.push(box)
+      } else {
+        emptyBoxes.push(box)
+      }
+    })
+
+    let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
+    
+    console.log(randBoxNum)
+    
+    let botChoice = emptyBoxes[randBoxNum]
+    
+    boxes[randBoxNum] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: randBoxNum }
+
+    console.log(boxes[botChoice])
 
     this.setState({
       history: history.concat([
@@ -65,14 +127,29 @@ class App extends React.Component {
     })
   }
 
+  vsBot = () => {
+    this.setState({
+      botGame: true
+    })
+  }
+
+  vsPlayer = () => {
+    this.setState({
+      botGame: false
+    })
+  }
+
   restartGame = () => {
-    return document.location.reload;
+    return document.location.reload(true);
   }
 
   render() {
     const history = this.state.history;
-    const current = history[this.state.turnNumber]
+    const current = history[this.state.turnNumber];
     const winner = calculateWinner(current.boxes);
+
+    console.log('--current--')
+    console.log(current)
 
     let status;
     if (winner === 'box blue') {
@@ -83,16 +160,41 @@ class App extends React.Component {
       status = this.state.isRedNext ? 'Blue\'s turn' : 'Red\'s turn';
     }
 
-    if (this.state.turnNumber !== 0) {
+    // PLAY VS A BOT
+    if (this.state.turnNumber >= 0 && this.state.botGame == true) {
       return (
-        <div>
+        <div className="game-container">
           <div>tic-tac-bananas</div>
           <div className="instructions">{status}</div>
           <GameBoard
+            history={history.boxes}
             boxes={current.boxes}
-            onClick={i => this.handleClick(i)}
+            onClick={i => this.handleBotClick(i)}
+            botGame={this.state.botGame}
+            autoPick={this.autoPick}
           />
+          <br></br>
           <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <br></br>
+          <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
+        </div>
+      )
+
+      // PLAY VS A HUMAN
+    } else if (this.state.turnNumber >= 0 && this.state.botGame == false) {
+      return (
+        <div className="game-container">
+          <div>🍌 tic-tac-bananas 🍌</div>
+          <div className="instructions">{status}</div>
+          <GameBoard
+            history={history.boxes}
+            boxes={current.boxes}
+            onClick={i => this.handlePlayerClick(i)}
+            botGame={this.state.botGame}
+          />
+          <br></br>
+          <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <br></br>
           <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
         </div>
       )
@@ -101,10 +203,12 @@ class App extends React.Component {
         <div id="info-container">
           <div>tic-tac-bananas</div>
           <p>Select an option for how you want to play: </p>
-          <StartMenu />
+          <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} />
           <GameBoard
+            history={history.boxes}
             boxes={current.boxes}
-            onClick={i => this.handleClick(i)}
+            onClick={() => { return alert('Please choose an option for how you want to play.') }}
+            botGame={this.state.botGame}
           />
         </div>
       )

@@ -1,5 +1,5 @@
 import React from 'react'
-import {UndoBtn} from './UndoBtn'
+import {UndoBtn} from '../Components/UndoBtn'
 
 export class UndoBtnContainer extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ export class UndoBtnContainer extends React.Component {
 
     render() {
         return (
-            <UndoBtn onClick={this.handleClick}/>
+            <UndoBtn className={'btn'} onClick={this.handleClick}/>
         )
     }
 }

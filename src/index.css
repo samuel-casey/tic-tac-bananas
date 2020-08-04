@@ -76,10 +76,13 @@ table {
   background-color: gainsboro;
   border-radius: 5%;
   text-align: center;
-  width: 75%;
+  width: fit-content;
+  padding: .25rem;
+  white-space: pre;
   box-shadow: 2px 2px gray;
   margin: 3px;
   align-self: center;
+  justify-self: center;
   font-size: 1rem;
   font-family: inherit;
 }

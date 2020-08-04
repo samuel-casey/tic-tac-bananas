@@ -1,5 +1,5 @@
 import React from 'react'
-import {RestartBtn} from './RestartBtn'
+import {RestartBtn} from '../Components/RestartBtn'
 
 export class RestartBtnContainer extends React.Component {
     constructor(props) {
@@ -8,14 +8,13 @@ export class RestartBtnContainer extends React.Component {
     }
 
     handleClick(e) {
-        const btn = e.target
-        console.log(btn)
-        this.props.onClick(btn)
+        console.log(this.props.onClick)
+        this.props.onClick()
     }
 
     render() {
         return (
-            <RestartBtn onClick={this.handleClick}/>
+            <RestartBtn className={'btn'} onClick={this.handleClick}/>
         )
     }
 }

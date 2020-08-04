@@ -9,7 +9,15 @@ export class GameBoard extends React.Component {
 
   handleClick(e) {
     const boxNo = e.target.id
-    this.props.onClick(boxNo)
+    
+    if (this.props.botGame == true) {
+      this.props.onClick(boxNo)
+      setTimeout( () => {
+        this.props.autoPick()
+      }, 1500)
+    } else {
+      this.props.onClick(boxNo)
+    }
   }
 
   showBox(i) {
@@ -25,9 +33,17 @@ export class GameBoard extends React.Component {
     )
   }
 
+  // componentWillUpdate(nextProps) {
+  //   if (this.props.history !== nextProps.boxes) {
+  //     console.log('GB updated')
+  //     console.log(nextProps.boxes[0])
+  //     // { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red' }
+  //   }
+  // }
+
   render() {   
     return (
-      <div className="game-container">
+      <div>
         <br></br>
         <br></br>
         <div className="game-board">
@@ -50,5 +66,5 @@ export class GameBoard extends React.Component {
       </div>
     )
   }
-}
 
+}
