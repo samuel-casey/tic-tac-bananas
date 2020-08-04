@@ -10,7 +10,7 @@ export class GameBoard extends React.Component {
   handleClick(e) {
     const boxNo = e.target.id
     
-    if (this.props.botGame == true) {
+    if (this.props.gameType === "bot" && this.props.gameOver == false) {
       this.props.onClick(boxNo)
       setTimeout( () => {
         this.props.autoPick()
