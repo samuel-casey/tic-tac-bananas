@@ -1,8 +1,25 @@
-import React from 'react'
-import { GameBoard } from './Components/GameBoard'
-import { UndoBtnContainer } from './Containers/UndoBtnContainer'
-import { StartMenu } from './Containers/StartMenu.js'
-import { RestartBtnContainer } from './Containers/RestartBtnContainer.js'
+import React from 'react';
+import { GameBoard } from './Components/GameBoard';
+import { UndoBtnContainer } from './Containers/UndoBtnContainer';
+import { StartMenu } from './Containers/StartMenu.js';
+import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
+import { Opponent } from './Components/Opponent.js';
+import {readRemoteFile} from 'react-papaparse'
+import * as usernamesCSV from './usernames.csv';
+
+const usernames = []
+
+const results = readRemoteFile(usernamesCSV, {
+  step: (row) => {
+    if (row !== 0) {}
+    usernames.push(row.data[1])
+  }
+  },
+  complete: () => {
+    console.log(usernames)
+    console.log('All done!')
+  }
+})
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +42,8 @@ class App extends React.Component {
       isRedNext: true,
       turnNumber: 0,
       gameType: null,
-      gameOver: false
+      gameOver: false,
+      opponent: null
     }
     this.handlePlayerClick = this.handlePlayerClick.bind(this);
     this.goBack = this.goBack.bind(this)
@@ -33,6 +51,8 @@ class App extends React.Component {
     this.vsBot = this.vsBot.bind(this)
     this.vsPlayer = this.vsPlayer.bind(this)
     this.autoPick = this.autoPick.bind(this)
+    this.vsOnline = this.vsOnline.bind(this)
+    this.chooseOpponent = this.chooseOpponent.bind(this)
   }
 
   handlePlayerClick = (i) => {
@@ -106,23 +126,9 @@ class App extends React.Component {
       }
     })
 
-    console.log('F BEFORE pick')
-    console.log(filledBoxes)
-
     let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
         
     let botChoice = emptyBoxes[randBoxNum].boxNo
-
-    console.log('BC')
-    console.log(botChoice)
-    
-    // for (let box of boxes) {
-    //   if (box.boxNo === randBoxNum) {
-    //     console.log("BOX")
-    //     console.log(box)
-    //     box = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(randBoxNum) }
-    //   }
-    // }
 
     boxes[botChoice].value = '🍌'
     boxes[botChoice].isFull = true 
@@ -161,20 +167,29 @@ class App extends React.Component {
     })
   }
 
+  chooseOpponent = () => {
+    const idx = Math.floor(Math.random() * usernames.length)
+    return usernames[idx]
+  }
+
   vsOnline = () => {
+    const newOpp = this.chooseOpponent()
+    console.log(newOpp)
     this.setState({
-      gameType: "online"
+      gameType: "online",
+      opponent: newOpp
     })
   }
 
   restartGame = () => {
-    return document.location.reload(true);
+    return window.location.reload(true);
   }
 
   render() {
     const history = this.state.history;
     const current = history[this.state.turnNumber];
     const winner = calculateWinner(current.boxes);
+    console.log(results)
 
     let status;
     if (winner === 'box blue') {
@@ -188,9 +203,10 @@ class App extends React.Component {
 
     // PLAY 'ONLINE' 
     if (this.state.turnNumber >= 0 && this.state.gameType === "online") {
+      const oppUserName = this.state.opponent
       return (
         <div className="game-container">
-          <div>tic-tac-bananas</div>
+          <div>tic-tac-bananas ~online~</div>
           <div className="instructions">{status}</div>
           <GameBoard
             history={history.boxes}
@@ -204,6 +220,8 @@ class App extends React.Component {
           <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
           <br></br>
           <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
+          <br></br>
+          <Opponent className={'opponent'} id={'opponent'} value={oppUserName}/>
         </div>
       )
 
@@ -251,7 +269,7 @@ class App extends React.Component {
         <div id="info-container">
           <div>tic-tac-bananas</div>
           <p>Select an option for how you want to play: </p>
-          <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} />
+          <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
           <GameBoard
             history={history.boxes}
             boxes={current.boxes}

@@ -33,6 +33,13 @@ table {
   background-color: blue !important;
 }
 
+.opponent {
+  font-style: oblique;
+  font-weight: bolder;
+  color: black;
+  background: rgba(255,0,0,.6);
+}
+
 .red {
   background-color: red;
 }
@@ -107,7 +114,7 @@ table {
 }
 
 #info-container {
-  background: rgba(100,255,0,.5);
+  background: rgba(255, 255, 255, 0.5);
   width: inherit;
   display: flex;
   flex-direction: column;
