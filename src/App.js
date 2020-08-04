@@ -4,20 +4,16 @@ import { UndoBtnContainer } from './Containers/UndoBtnContainer';
 import { StartMenu } from './Containers/StartMenu.js';
 import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
 import { Opponent } from './Components/Opponent.js';
-import {readRemoteFile} from 'react-papaparse'
+import { readRemoteFile } from 'react-papaparse'
 import * as usernamesCSV from './usernames.csv';
 
 const usernames = []
 
-const results = readRemoteFile(usernamesCSV, {
+readRemoteFile(usernamesCSV, {
   step: (row) => {
-    if (row !== 0) {}
-    usernames.push(row.data[1])
-  }
-  },
-  complete: () => {
-    console.log(usernames)
-    console.log('All done!')
+    if (row !== 0) {
+      usernames.push(row.data[1])
+    }
   }
 })
 
@@ -65,6 +61,8 @@ class App extends React.Component {
       return;
     }
 
+    console.log('LOCAL')
+
     const next = this.state.isRedNext
 
     next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(i) }
@@ -87,6 +85,7 @@ class App extends React.Component {
     const next = this.state.isRedNext
 
     if (calculateWinner(boxes) || boxes[i].isFull === true) {
+      console.log(boxes[i])
       return;
     }
 
@@ -117,9 +116,9 @@ class App extends React.Component {
         gameOver: true
       })
     }
-    
+
     boxes.forEach((box) => {
-      if (box.isFull == true) {
+      if (box.isFull === true) {
         filledBoxes.push(box)
       } else {
         emptyBoxes.push(box)
@@ -127,15 +126,13 @@ class App extends React.Component {
     })
 
     let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
-        
+
     let botChoice = emptyBoxes[randBoxNum].boxNo
 
     boxes[botChoice].value = '🍌'
-    boxes[botChoice].isFull = true 
+    boxes[botChoice].isFull = true
     boxes[botChoice].fromTurn = this.state.turnNumber
     boxes[botChoice].className = 'box red'
-
-    console.log(boxes)  
 
     this.setState({
       history: history.concat([
@@ -174,11 +171,22 @@ class App extends React.Component {
 
   vsOnline = () => {
     const newOpp = this.chooseOpponent()
-    console.log(newOpp)
+    console.log('Online connected')
     this.setState({
-      gameType: "online",
-      opponent: newOpp
+      gameType: "online"
     })
+
+    setTimeout(() => {
+      this.setState({
+        opponent: "Connecting you to your opponent..."
+      })
+    })
+
+    setTimeout(() => {
+      this.setState({
+        opponent: newOpp
+      })
+    }, 2000)
   }
 
   restartGame = () => {
@@ -189,17 +197,17 @@ class App extends React.Component {
     const history = this.state.history;
     const current = history[this.state.turnNumber];
     const winner = calculateWinner(current.boxes);
-    console.log(results)
 
     let status;
     if (winner === 'box blue') {
       status = 'Blue wins!';
     } else if (winner === 'box red') {
       status = 'Red wins!';
+    } else if (winner === 'Draw') {
+      status = 'It\'s a draw!'
     } else {
       status = this.state.isRedNext ? 'Blue\'s turn' : 'Red\'s turn';
     }
-
 
     // PLAY 'ONLINE' 
     if (this.state.turnNumber >= 0 && this.state.gameType === "online") {
@@ -221,12 +229,12 @@ class App extends React.Component {
           <br></br>
           <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
           <br></br>
-          <Opponent className={'opponent'} id={'opponent'} value={oppUserName}/>
+          <Opponent className={'opponent'} id={'opponent'} value={oppUserName} />
         </div>
       )
 
-    // PLAY VS A BOT
-     } else if (this.state.turnNumber >= 0 && this.state.gameType === "bot") {
+      // PLAY VS A BOT
+    } else if (this.state.turnNumber >= 0 && this.state.gameType === "bot") {
       return (
         <div className="game-container">
           <div>tic-tac-bananas</div>
@@ -256,6 +264,7 @@ class App extends React.Component {
             history={history.boxes}
             boxes={current.boxes}
             onClick={i => this.handlePlayerClick(i)}
+            gameOver={this.state.gameOver}
             gameType={this.state.gameType}
           />
           <br></br>
@@ -294,11 +303,23 @@ const calculateWinner = (boxes) => {
     [2, 4, 6],
   ];
 
+  let fullBoxCount = 0
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+    //CHECK WIN
     if (boxes[a].className !== 'box ' && boxes[a].className === boxes[b].className && boxes[a].className === boxes[c].className) {
       return boxes[a].className;
     }
+    //CHECK DRAW
+    boxes.forEach((box) => {
+      if (box.isFull === true) {
+        fullBoxCount += 1
+      }
+      if (fullBoxCount === 9) {
+        return 'Draw'
+      }
+    })
   }
   return null;
 }
