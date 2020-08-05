@@ -61,8 +61,6 @@ class App extends React.Component {
       return;
     }
 
-    console.log('LOCAL')
-
     const next = this.state.isRedNext
 
     next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(i) }
@@ -85,7 +83,6 @@ class App extends React.Component {
     const next = this.state.isRedNext
 
     if (calculateWinner(boxes) || boxes[i].isFull === true) {
-      console.log(boxes[i])
       return;
     }
 
@@ -176,10 +173,8 @@ class App extends React.Component {
       gameType: "online"
     })
 
-    setTimeout(() => {
-      this.setState({
-        opponent: "Connecting you to your opponent..."
-      })
+    this.setState({
+      opponent: "Connecting you to your opponent..."
     })
 
     setTimeout(() => {
@@ -225,9 +220,8 @@ class App extends React.Component {
             gameOver={this.state.gameOver}
           />
           <br></br>
-          <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
           <br></br>
-          <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
           <br></br>
           <Opponent className={'opponent'} id={'opponent'} value={oppUserName} />
         </div>
@@ -248,7 +242,7 @@ class App extends React.Component {
             gameOver={this.state.gameOver}
           />
           <br></br>
-          <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
           <br></br>
           <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
         </div>
@@ -268,7 +262,7 @@ class App extends React.Component {
             gameType={this.state.gameType}
           />
           <br></br>
-          <RestartBtnContainer className={'btn'} onClick={this.restartGame} />
+          <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
           <br></br>
           <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
         </div>
@@ -307,19 +301,22 @@ const calculateWinner = (boxes) => {
 
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+
     //CHECK WIN
     if (boxes[a].className !== 'box ' && boxes[a].className === boxes[b].className && boxes[a].className === boxes[c].className) {
       return boxes[a].className;
     }
-    //CHECK DRAW
-    boxes.forEach((box) => {
-      if (box.isFull === true) {
-        fullBoxCount += 1
-      }
-      if (fullBoxCount === 9) {
-        return 'Draw'
-      }
-    })
+  }
+
+  //CHECK DRAW
+  for (let box of boxes) {
+    if (box.isFull === true) {
+      fullBoxCount += 1
+    }
+  }
+
+  if (fullBoxCount === 9) {
+    return 'Draw'
   }
   return null;
 }

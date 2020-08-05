@@ -14,7 +14,7 @@ export class RestartBtnContainer extends React.Component {
 
     render() {
         return (
-            <RestartBtn className={'btn'} onClick={this.handleClick}/>
+            <RestartBtn className={'btn'} onClick={this.handleClick} value={this.props.value}/>
         )
     }
 }
