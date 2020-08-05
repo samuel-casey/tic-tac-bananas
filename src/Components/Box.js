@@ -1,11 +1,6 @@
 import React, {useEffect} from 'react'
 
 export const Box = (props) => {
-
-    // useEffect(() => {
-    //   console.log(props.className)
-    // })
-
       return (
         <button
         id={props.id}

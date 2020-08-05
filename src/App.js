@@ -3,9 +3,10 @@ import { GameBoard } from './Components/GameBoard';
 import { UndoBtnContainer } from './Containers/UndoBtnContainer';
 import { StartMenu } from './Containers/StartMenu.js';
 import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
-import { Opponent } from './Components/Opponent.js';
+import { OpponentContainer } from './Containers/OpponentContainer.js';
 import { readRemoteFile } from 'react-papaparse'
 import * as usernamesCSV from './usernames.csv';
+import './index.scss';
 
 const usernames = []
 
@@ -63,7 +64,7 @@ class App extends React.Component {
 
     const next = this.state.isRedNext
 
-    next ? boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) } : boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(i) }
+    next ? boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) } : boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(i) }
 
     this.setState({
       history: history.concat([
@@ -86,7 +87,9 @@ class App extends React.Component {
       return;
     }
 
-    boxes[i] = { value: '🍌', isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) }
+    // <span role="img" aria-label="banana">🍌</span>
+
+    boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) }
 
     this.setState({
       history: history.concat([
@@ -126,7 +129,7 @@ class App extends React.Component {
 
     let botChoice = emptyBoxes[randBoxNum].boxNo
 
-    boxes[botChoice].value = '🍌'
+    boxes[botChoice].value = <span role="img" aria-label="banana">🍌</span>
     boxes[botChoice].isFull = true
     boxes[botChoice].fromTurn = this.state.turnNumber
     boxes[botChoice].className = 'box red'
@@ -174,7 +177,7 @@ class App extends React.Component {
     })
 
     this.setState({
-      opponent: "Connecting you to your opponent..."
+      opponent: null
     })
 
     setTimeout(() => {
@@ -195,13 +198,13 @@ class App extends React.Component {
 
     let status;
     if (winner === 'box blue') {
-      status = 'Blue wins!';
+      status = <p>Blue wins!</p>;
     } else if (winner === 'box red') {
-      status = 'Red wins!';
+      status = <p>Red wins!</p>;
     } else if (winner === 'Draw') {
-      status = 'It\'s a draw!'
+      status = <p>It\'s a draw!</p>
     } else {
-      status = this.state.isRedNext ? 'Blue\'s turn' : 'Red\'s turn';
+      status = this.state.isRedNext ? <p style={{"background" : "rgba(0,0,255,.3)"}}>Blue's turn</p> : <p  style={{"background" : "rgba(255,0,0,.3)"}}>Red's turn</p>;
     }
 
     // PLAY 'ONLINE' 
@@ -209,7 +212,8 @@ class App extends React.Component {
       const oppUserName = this.state.opponent
       return (
         <div className="game-container">
-          <div>tic-tac-bananas ~online~</div>
+          <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
+          <div>~online~</div>
           <div className="instructions">{status}</div>
           <GameBoard
             history={history.boxes}
@@ -223,7 +227,8 @@ class App extends React.Component {
           <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
           <br></br>
           <br></br>
-          <Opponent className={'opponent'} id={'opponent'} value={oppUserName} />
+          <div style={{"text-emphasis": "bold"}}>Playing against:</div>
+          <OpponentContainer className={'opponent'} id={'opponent'} value={oppUserName} />
         </div>
       )
 
@@ -231,7 +236,7 @@ class App extends React.Component {
     } else if (this.state.turnNumber >= 0 && this.state.gameType === "bot") {
       return (
         <div className="game-container">
-          <div>tic-tac-bananas</div>
+          <div><span role="img" aria-label="banana">🍌</span>tic-tac-bananas<span role="img" aria-label="banana">🍌</span></div>
           <div className="instructions">{status}</div>
           <GameBoard
             history={history.boxes}
@@ -252,7 +257,7 @@ class App extends React.Component {
     } else if (this.state.turnNumber >= 0 && this.state.gameType === "local") {
       return (
         <div className="game-container">
-          <div>🍌 tic-tac-bananas 🍌</div>
+          <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
           <div className="instructions">{status}</div>
           <GameBoard
             history={history.boxes}
@@ -270,7 +275,7 @@ class App extends React.Component {
     } else {
       return (
         <div id="info-container">
-          <div>tic-tac-bananas</div>
+          <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
           <p>Select an option for how you want to play: </p>
           <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
           <GameBoard
