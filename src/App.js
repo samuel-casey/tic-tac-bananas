@@ -50,6 +50,7 @@ class App extends React.Component {
     this.autoPick = this.autoPick.bind(this)
     this.vsOnline = this.vsOnline.bind(this)
     this.chooseOpponent = this.chooseOpponent.bind(this)
+    this.onlinePick = this.onlinePick.bind(this)
   }
 
   handlePlayerClick = (i) => {
@@ -87,8 +88,6 @@ class App extends React.Component {
       return;
     }
 
-    // <span role="img" aria-label="banana">🍌</span>
-
     boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) }
 
     this.setState({
@@ -100,6 +99,55 @@ class App extends React.Component {
       isRedNext: !next,
       turnNumber: history.length
     })
+  }
+
+  onlinePick = () => {
+
+    const delays = [2500,3500,4500,6000]
+    const delayIdx = Math.floor(Math.random() * delays.length)
+    const delay = delays[delayIdx]
+
+    setTimeout(() => {
+      const history = this.state.history.slice(0, this.state.turnNumber + 1);
+      const current = history[history.length - 1];
+      const boxes = current.boxes.slice();
+      const next = this.state.isRedNext;
+
+      let filledBoxes = [];
+      let emptyBoxes = [];
+
+      if (calculateWinner(boxes)) {
+        return this.setState({
+          gameOver: true
+        })
+      }
+
+      boxes.forEach((box) => {
+        if (box.isFull === true) {
+          filledBoxes.push(box)
+        } else {
+          emptyBoxes.push(box)
+        }
+      })
+
+      let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
+
+      let botChoice = emptyBoxes[randBoxNum].boxNo
+
+      const newBox = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: boxes[botChoice].boxNo }
+
+      boxes[botChoice] = newBox
+
+      this.setState({
+        history: history.concat([
+          {
+            boxes: boxes,
+          }
+        ]),
+        isRedNext: !next,
+        turnNumber: history.length
+      })
+    }, delay)
   }
 
   autoPick = () => {
@@ -129,10 +177,14 @@ class App extends React.Component {
 
     let botChoice = emptyBoxes[randBoxNum].boxNo
 
-    boxes[botChoice].value = <span role="img" aria-label="banana">🍌</span>
-    boxes[botChoice].isFull = true
-    boxes[botChoice].fromTurn = this.state.turnNumber
-    boxes[botChoice].className = 'box red'
+    const newBox = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: boxes[botChoice].boxNo }
+
+    boxes[botChoice] = newBox
+
+    console.log('---')
+    console.log(next)
+    console.log('---')
+
 
     this.setState({
       history: history.concat([
@@ -145,11 +197,14 @@ class App extends React.Component {
     })
   }
 
-  goBack = (btn) => {
+  goBack = () => {
     this.setState({
       turnNumber: this.state.turnNumber - 1,
       isRedNext: !this.state.isRedNext
     })
+    console.log(";;;")
+    console.log(this.state.isRedNext)
+    console.log(";;;")
   }
 
   vsBot = () => {
@@ -202,9 +257,9 @@ class App extends React.Component {
     } else if (winner === 'box red') {
       status = <p>Red wins!</p>;
     } else if (winner === 'Draw') {
-      status = <p>It\'s a draw!</p>
+      status = <p>It's a draw!</p>
     } else {
-      status = this.state.isRedNext ? <p style={{"background" : "rgba(0,0,255,.3)"}}>Blue's turn</p> : <p  style={{"background" : "rgba(255,0,0,.3)"}}>Red's turn</p>;
+      status = this.state.isRedNext ? <p style={{ "background": "rgba(0,0,255,.3)" }}>Blue's turn</p> : <p style={{ "background": "rgba(255,0,0,.3)" }}>Red's turn</p>;
     }
 
     // PLAY 'ONLINE' 
@@ -220,14 +275,14 @@ class App extends React.Component {
             boxes={current.boxes}
             onClick={i => this.handleBotClick(i)}
             gameType={this.state.gameType}
-            autoPick={this.autoPick}
+            onlinePick={this.onlinePick}
             gameOver={this.state.gameOver}
           />
           <br></br>
           <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
           <br></br>
           <br></br>
-          <div style={{"text-emphasis": "bold"}}>Playing against:</div>
+          <div style={{ "textEmphasis": "bold" }}>Playing against:</div>
           <OpponentContainer className={'opponent'} id={'opponent'} value={oppUserName} />
         </div>
       )
@@ -239,11 +294,12 @@ class App extends React.Component {
           <div><span role="img" aria-label="banana">🍌</span>tic-tac-bananas<span role="img" aria-label="banana">🍌</span></div>
           <div className="instructions">{status}</div>
           <GameBoard
-            history={history.boxes}
+            history={history}
             boxes={current.boxes}
             onClick={i => this.handleBotClick(i)}
             gameType={this.state.gameType}
             autoPick={this.autoPick}
+            isRedNext={this.state.isRedNext}
             gameOver={this.state.gameOver}
           />
           <br></br>

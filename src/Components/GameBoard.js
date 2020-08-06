@@ -25,7 +25,7 @@ export class GameBoard extends React.Component {
 
     checkFull()
 
-    if (this.props.gameType === "online" && this.props.gameOver === false && fullBoxes.length % 2 === 0) {
+    if (this.props.gameType === "online" && this.props.gameOver === false && fullBoxes.length % 2 === 0 || fullBoxes.length % 2 > 0 && this.props.isRedNext === true) {
       this.props.onClick(boxNo)
     } else if (this.props.gameType === "bot" && this.props.gameOver === false && fullBoxes.length % 2 === 0) {
       this.props.onClick(boxNo)
@@ -77,6 +77,7 @@ export class GameBoard extends React.Component {
 
   componentDidUpdate() {
 
+
     const checkFull = () => {
       this.props.boxes.forEach((box) => {
         if (box.isFull === true && fullBoxes.indexOf(box) === -1) {
@@ -87,10 +88,17 @@ export class GameBoard extends React.Component {
 
     checkFull()
 
-    setTimeout(() => {
+    if (this.props.gameType === "bot") {
+      setTimeout(() => {
+        if (this.props.isRedNext === false) {
+          this.props.autoPick()
+        }
+      }, 200)
+
+    } else if (this.props.gameType === "online") {      
       if (fullBoxes.length % 2 > 0) {
-        this.props.autoPick()
+        this.props.onlinePick()
       }
-    }, 4000)
+    }
   }
 }
