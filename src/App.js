@@ -103,7 +103,7 @@ class App extends React.Component {
 
   onlinePick = () => {
 
-    const delays = [2500,3500,4500,6000]
+    const delays = [2500, 3500, 4500, 6000]
     const delayIdx = Math.floor(Math.random() * delays.length)
     const delay = delays[delayIdx]
 
@@ -198,13 +198,15 @@ class App extends React.Component {
   }
 
   goBack = () => {
-    this.setState({
-      turnNumber: this.state.turnNumber - 1,
-      isRedNext: !this.state.isRedNext
-    })
-    console.log(";;;")
-    console.log(this.state.isRedNext)
-    console.log(";;;")
+
+    if (this.state.turnNumber === 0) {
+      this.restartGame()
+    } else {
+      this.setState({
+        turnNumber: this.state.turnNumber - 1,
+        isRedNext: !this.state.isRedNext
+      })
+    }
   }
 
   vsBot = () => {
