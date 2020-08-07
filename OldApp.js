@@ -1,34 +1,3 @@
-// import utils
-import './index.scss';
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
-
-// import Game components
-import { GameBoard } from './GameComponents/GameBoard';
-import { UndoBtnContainer } from './Containers/UndoBtnContainer';
-import { StartMenu } from './Containers/StartMenu.js';
-import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
-import { OpponentContainer } from './Containers/OpponentContainer.js';
-
-// import fake usernames and csv parser
-import * as usernamesCSV from './usernames.csv';
-import { readRemoteFile } from 'react-papaparse'
-
-// import Routes
-import * as ROUTES from './constants/routes';
-import {Home} from './SiteComponents/Home'
-import { Admin } from './SiteComponents/Admin';
-import { Navigation } from './SiteComponents/Navigation';
-import { SignUp } from './SiteComponents/SignUp';
-import { SignIn } from './SiteComponents/SignIn';
-import { PasswordForget } from './SiteComponents/PasswordForget';
-import { Account } from './SiteComponents/Account';
-import { Play } from './SiteComponents/Play';
-
-
 const usernames = []
 
 readRemoteFile(usernamesCSV, {
@@ -358,6 +327,8 @@ class App extends React.Component {
         <div>
           <Router>
             <div>
+              <Navigation />
+              <hr />
               <Route path={ROUTES.HOME} component={Home} />
               <Route path={ROUTES.SIGN_UP} component={SignUp} />
               <Route path={ROUTES.SIGN_IN} component={SignIn} />
@@ -365,10 +336,20 @@ class App extends React.Component {
               <Route path={ROUTES.PLAY} component={Play} />
               <Route path={ROUTES.ACCOUNT} component={Account} />
               <Route path={ROUTES.ADMIN} component={Admin} />
-              <hr />
-              <Navigation />
             </div>
           </Router>
+
+          <div id="info-container">
+            <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
+            <p>Select an option for how you want to play: </p>
+            <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
+            <GameBoard
+              history={history.boxes}
+              boxes={current.boxes}
+              onClick={() => { return alert('Please choose an option for how you want to play.') }}
+              gameType={this.state.gameType}
+            />
+          </div>
         </div>
       )
     }
