@@ -1,5 +1,5 @@
 import React from 'react'
-import {UndoBtn} from '../Components/UndoBtn'
+import {UndoBtn} from '../GameComponents/UndoBtn'
 
 export class UndoBtnContainer extends React.Component {
     constructor(props) {

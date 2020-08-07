@@ -1,5 +1,5 @@
 import React from 'react'
-import {RestartBtn} from '../Components/RestartBtn'
+import {RestartBtn} from '../GameComponents/RestartBtn'
 
 export class RestartBtnContainer extends React.Component {
     constructor(props) {

@@ -4,6 +4,7 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from 'firebase';
+import { BrowserRouter } from 'react-router-dom'
 
 const config = {
   apiKey: "AIzaSyDjipWGB6aW0H5x62zFJHuNhwrkzpRO5Sc",
@@ -18,9 +19,9 @@ const config = {
 firebase.initializeApp(config);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

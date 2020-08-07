@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameBoard } from './Components/GameBoard';
+import { GameBoard } from './GameComponents/GameBoard';
 import { UndoBtnContainer } from './Containers/UndoBtnContainer';
 import { StartMenu } from './Containers/StartMenu.js';
 import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';

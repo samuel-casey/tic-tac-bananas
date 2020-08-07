@@ -1,6 +1,6 @@
 import React from 'react'
-import {LoadingIndicator} from '../Components/LoadingIndicator'
-import {Opponent} from '../Components/Opponent'
+import {LoadingIndicator} from '../GameComponents/LoadingIndicator'
+import {Opponent} from '../GameComponents/Opponent'
 
 export class OpponentContainer extends React.Component {
     constructor(props){

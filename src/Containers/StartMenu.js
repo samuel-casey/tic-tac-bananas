@@ -1,7 +1,7 @@
 import React from 'react';
-import {BotBtn} from '../Components/BotBtn.js'
-import {PlayerBtn} from '../Components/PlayerBtn.js'
-import {OnlineBtn} from '../Components/OnlineBtn.js'
+import {BotBtn} from '../GameComponents/BotBtn'
+import {PlayerBtn} from '../GameComponents/PlayerBtn'
+import {OnlineBtn} from '../GameComponents/OnlineBtn'
 
 export const StartMenu = (props) => {
         return (
