@@ -19,7 +19,7 @@ import { readRemoteFile } from 'react-papaparse'
 
 // import Routes
 import * as ROUTES from './constants/routes';
-import {Home} from './SiteComponents/Home'
+import { Home } from './SiteComponents/Home'
 import { Admin } from './SiteComponents/Admin';
 import { Navigation } from './SiteComponents/Navigation';
 import { SignUp } from './SiteComponents/SignUp';

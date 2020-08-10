@@ -1,5 +1,5 @@
 import React from 'react'
-import {LoadingIndicator} from '../GameComponents/LoadingIndicator'
+import {LoadingIndicator} from '../SiteComponents/LoadingIndicator'
 import {Opponent} from '../GameComponents/Opponent'
 
 export class OpponentContainer extends React.Component {
