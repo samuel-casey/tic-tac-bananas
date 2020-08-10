@@ -360,9 +360,20 @@ class App extends React.Component {
             <div>
               <Route path={ROUTES.HOME} component={Home} />
               <Route path={ROUTES.SIGN_UP} component={SignUp} />
-              <Route path={ROUTES.SIGN_IN} component={SignIn} />
+              <Route path={ROUTES.SIGN_IN}>
+                <SignIn style={{ "color": "red" }} />
+              </Route>
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-              <Route path={ROUTES.PLAY} component={Play} />
+              <Route path={ROUTES.PLAY}>
+                <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
+                <GameBoard
+                  history={history.boxes}
+                  boxes={current.boxes}
+                  onClick={i => this.handlePlayerClick(i)}
+                  gameOver={this.state.gameOver}
+                  gameType={this.state.gameType}
+                />
+              </Route>
               <Route path={ROUTES.ACCOUNT} component={Account} />
               <Route path={ROUTES.ADMIN} component={Admin} />
               <hr />

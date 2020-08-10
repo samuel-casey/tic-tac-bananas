@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const SignIn = () => (
+export const SignIn = (props) => (
   <div>
-    <h1>SignIn</h1>
+    <h1 style={props.style}>SignIn</h1>
   </div>
 );

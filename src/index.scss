@@ -24,6 +24,12 @@ table {
   -webkit-text-stroke: 2px rgba(0, 255, 100, 0.3);
 }
 
+#gb-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #header-instructions {
   background: rgba(0, 255, 100, 0.3);
   font-style: italic;

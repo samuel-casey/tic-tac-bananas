@@ -1,9 +1,7 @@
 import React from 'react'
 import { Box } from './Box.js'
 
-
 let fullBoxes = []
-
 
 export class GameBoard extends React.Component {
   constructor(props) {
@@ -51,7 +49,7 @@ export class GameBoard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="gb-container">
         <br></br>
         <br></br>
         <div className="game-board">
@@ -76,7 +74,6 @@ export class GameBoard extends React.Component {
   }
 
   componentDidUpdate() {
-
 
     const checkFull = () => {
       this.props.boxes.forEach((box) => {

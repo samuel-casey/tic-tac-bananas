@@ -1,4 +1,5 @@
 import React from 'react'
+import { StartMenu } from '../Containers/StartMenu'
 import { GameBoard } from '../GameComponents/GameBoard'
 
 import { readRemoteFile } from 'react-papaparse'
@@ -265,15 +266,16 @@ export class Play extends React.Component {
         }
 
         return (
-            <GameBoard
-                history={history}
-                boxes={current.boxes}
-                onClick={i => this.handleBotClick(i)}
-                gameType={this.state.gameType}
-                autoPick={this.autoPick}
-                isRedNext={this.state.isRedNext}
-                gameOver={this.state.gameOver}
-            />
+            <div>
+                <p>Select an option for how you want to play: </p>
+                <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
+                <GameBoard
+                    history={history.boxes}
+                    boxes={current.boxes}
+                    onClick={() => { return alert('Please choose an option for how you want to play.') }}
+                    gameType={this.state.gameType}
+                />
+              </div>
         )
     }
 }
@@ -304,8 +306,8 @@ const calculateWinner = (boxes) => {
     //CHECK DRAW
     for (let box of boxes) {
         if (box.isFull === true) {
-            fullBoxCount += 1
-        }
+                    fullBoxCount += 1
+                }
     }
 
     if (fullBoxCount === 9) {
