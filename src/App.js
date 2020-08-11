@@ -6,12 +6,12 @@ import {
   Route,
 } from 'react-router-dom';
 
-// import Game components
-import { GameBoard } from './GameComponents/GameBoard';
-import { UndoBtnContainer } from './Containers/UndoBtnContainer';
-import { StartMenu } from './Containers/StartMenu.js';
-import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
-import { OpponentContainer } from './Containers/OpponentContainer.js';
+// // import Game components
+// import { GameBoard } from './GameComponents/GameBoard';
+// import { UndoBtnContainer } from './Containers/UndoBtnContainer';
+// import { StartMenu } from './Containers/StartMenu.js';
+// import { RestartBtnContainer } from './Containers/RestartBtnContainer.js';
+// import { OpponentContainer } from './Containers/OpponentContainer.js';
 
 // import fake usernames and csv parser
 import * as usernamesCSV from './usernames.csv';
@@ -27,6 +27,7 @@ import { SignIn } from './SiteComponents/SignIn';
 import { PasswordForget } from './SiteComponents/PasswordForget';
 import { Account } from './SiteComponents/Account';
 import { Play } from './SiteComponents/Play';
+import {SignOut} from './SiteComponents/SignOut'
 
 
 const usernames = []
@@ -51,338 +52,43 @@ class App extends React.Component {
       boxNo: index
     }))
 
+    // TURN THIS INTO MOBX //
     this.state = {
-      history: [
-        {
-          boxes: boxes,
-        }
-      ],
-      isRedNext: true,
-      turnNumber: 0,
-      gameType: null,
-      gameOver: false,
-      opponent: null
+      isLoggedIn: true,
+      gameInProgress: false
     }
-    this.handlePlayerClick = this.handlePlayerClick.bind(this);
-    this.goBack = this.goBack.bind(this)
-    this.restartGame = this.restartGame.bind(this)
-    this.vsBot = this.vsBot.bind(this)
-    this.vsPlayer = this.vsPlayer.bind(this)
-    this.autoPick = this.autoPick.bind(this)
-    this.vsOnline = this.vsOnline.bind(this)
-    this.chooseOpponent = this.chooseOpponent.bind(this)
-    this.onlinePick = this.onlinePick.bind(this)
+    this.toggleGameInProgress = this.toggleGameInProgress.bind(this)
   }
 
-  handlePlayerClick = (i) => {
-
-    const history = this.state.history.slice(0, this.state.turnNumber + 1);
-    const current = history[history.length - 1];
-    const boxes = current.boxes.slice();
-
-    if (calculateWinner(boxes) || boxes[i].isFull === true) {
-      return;
-    }
-
-    const next = this.state.isRedNext
-
-    next ? boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) } : boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: Number(i) }
-
-    this.setState({
-      history: history.concat([
-        {
-          boxes: boxes,
-        }
-      ]),
-      isRedNext: !next,
-      turnNumber: history.length
-    })
-  }
-
-  handleBotClick = (i) => {
-    const history = this.state.history.slice(0, this.state.turnNumber + 1);
-    const current = history[history.length - 1];
-    const boxes = current.boxes.slice();
-    const next = this.state.isRedNext
-
-    if (calculateWinner(boxes) || boxes[i].isFull === true) {
-      return;
-    }
-
-    boxes[i] = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box blue', boxNo: Number(i) }
-
-    this.setState({
-      history: history.concat([
-        {
-          boxes: boxes,
-        }
-      ]),
-      isRedNext: !next,
-      turnNumber: history.length
-    })
-  }
-
-  onlinePick = () => {
-
-    const delays = [2500, 3500, 4500, 6000]
-    const delayIdx = Math.floor(Math.random() * delays.length)
-    const delay = delays[delayIdx]
-
-    setTimeout(() => {
-      const history = this.state.history.slice(0, this.state.turnNumber + 1);
-      const current = history[history.length - 1];
-      const boxes = current.boxes.slice();
-      const next = this.state.isRedNext;
-
-      let filledBoxes = [];
-      let emptyBoxes = [];
-
-      if (calculateWinner(boxes)) {
-        return this.setState({
-          gameOver: true
-        })
-      }
-
-      boxes.forEach((box) => {
-        if (box.isFull === true) {
-          filledBoxes.push(box)
-        } else {
-          emptyBoxes.push(box)
-        }
-      })
-
-      let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
-
-      let botChoice = emptyBoxes[randBoxNum].boxNo
-
-      const newBox = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: boxes[botChoice].boxNo }
-
-      boxes[botChoice] = newBox
-
-      this.setState({
-        history: history.concat([
-          {
-            boxes: boxes,
-          }
-        ]),
-        isRedNext: !next,
-        turnNumber: history.length
-      })
-    }, delay)
-  }
-
-  autoPick = () => {
-    const history = this.state.history.slice(0, this.state.turnNumber + 1);
-    const current = history[history.length - 1];
-    const boxes = current.boxes.slice();
-    const next = this.state.isRedNext;
-
-    let filledBoxes = [];
-    let emptyBoxes = [];
-
-    if (calculateWinner(boxes)) {
-      return this.setState({
-        gameOver: true
-      })
-    }
-
-    boxes.forEach((box) => {
-      if (box.isFull === true) {
-        filledBoxes.push(box)
-      } else {
-        emptyBoxes.push(box)
-      }
-    })
-
-    let randBoxNum = Math.floor(Math.random() * emptyBoxes.length)
-
-    let botChoice = emptyBoxes[randBoxNum].boxNo
-
-    const newBox = { value: <span role="img" aria-label="banana">🍌</span>, isFull: true, fromTurn: this.state.turnNumber, className: 'box red', boxNo: boxes[botChoice].boxNo }
-
-    boxes[botChoice] = newBox
-
-    console.log('---')
-    console.log(next)
-    console.log('---')
-
-
-    this.setState({
-      history: history.concat([
-        {
-          boxes: boxes,
-        }
-      ]),
-      isRedNext: !next,
-      turnNumber: history.length
-    })
-  }
-
-  goBack = () => {
-
-    if (this.state.turnNumber === 0) {
-      this.restartGame()
-    } else {
-      this.setState({
-        turnNumber: this.state.turnNumber - 1,
-        isRedNext: !this.state.isRedNext
-      })
-    }
-  }
-
-  vsBot = () => {
-    this.setState({
-      gameType: "bot"
-    })
-  }
-
-  vsPlayer = () => {
-    this.setState({
-      gameType: "local"
-    })
-  }
-
-  chooseOpponent = () => {
-    const idx = Math.floor(Math.random() * usernames.length)
-    return usernames[idx]
-  }
-
-  vsOnline = () => {
-    const newOpp = this.chooseOpponent()
-    console.log('Online connected')
-    this.setState({
-      gameType: "online"
-    })
-
-    this.setState({
-      opponent: null
-    })
-
-    setTimeout(() => {
-      this.setState({
-        opponent: newOpp
-      })
-    }, 2000)
-  }
-
-  restartGame = () => {
-    return window.location.reload(true);
+  toggleGameInProgress() {
+    this.setState((state,props) => ({
+      gameInProgress: !state.gameInProgress
+    }));
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[this.state.turnNumber];
-    const winner = calculateWinner(current.boxes);
-
-    let status;
-    if (winner === 'box blue') {
-      status = <p>Blue wins!</p>;
-    } else if (winner === 'box red') {
-      status = <p>Red wins!</p>;
-    } else if (winner === 'Draw') {
-      status = <p>It's a draw!</p>
-    } else {
-      status = this.state.isRedNext ? <p style={{ "background": "rgba(0,0,255,.3)" }}>Blue's turn</p> : <p style={{ "background": "rgba(255,0,0,.3)" }}>Red's turn</p>;
-    }
-
-    // PLAY 'ONLINE' 
-    if (this.state.turnNumber >= 0 && this.state.gameType === "online") {
-      const oppUserName = this.state.opponent
-      return (
-        <div className="game-container">
-          <Navigation />
-          <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
-          <div>~online~</div>
-          <div className="instructions">{status}</div>
-          <GameBoard
-            history={history.boxes}
-            boxes={current.boxes}
-            onClick={i => this.handleBotClick(i)}
-            gameType={this.state.gameType}
-            onlinePick={this.onlinePick}
-            gameOver={this.state.gameOver}
-          />
-          <br></br>
-          <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
-          <br></br>
-          <br></br>
-          <div style={{ "textEmphasis": "bold" }}>Playing against:</div>
-          <OpponentContainer className={'opponent'} id={'opponent'} value={oppUserName} />
-        </div>
-      )
-      // PLAY VS A BOT
-    } else if (this.state.turnNumber >= 0 && this.state.gameType === "bot") {
-      return (
-        <div className="game-container">
-          <Navigation />
-          <div><span role="img" aria-label="banana">🍌</span>tic-tac-bananas<span role="img" aria-label="banana">🍌</span></div>
-          <div className="instructions">{status}</div>
-          <GameBoard
-            history={history}
-            boxes={current.boxes}
-            onClick={i => this.handleBotClick(i)}
-            gameType={this.state.gameType}
-            autoPick={this.autoPick}
-            isRedNext={this.state.isRedNext}
-            gameOver={this.state.gameOver}
-          />
-          <br></br>
-          <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
-          <br></br>
-          <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
-        </div>
-      )
-
-      // PLAY LOCALLY
-    } else if (this.state.turnNumber >= 0 && this.state.gameType === "local") {
-      return (
-        <div className="game-container">
-          <Navigation />
-          <div><span role="img" aria-label="banana">🍌</span> tic-tac-bananas <span role="img" aria-label="banana">🍌</span></div>
-          <div className="instructions">{status}</div>
-          <GameBoard
-            history={history.boxes}
-            boxes={current.boxes}
-            onClick={i => this.handlePlayerClick(i)}
-            gameOver={this.state.gameOver}
-            gameType={this.state.gameType}
-          />
-          <br></br>
-          <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
-          <br></br>
-          <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
-        </div>
-      )
-    } else {
       return (
         <div>
           <Router>
             <div>
-              <Route path={ROUTES.HOME} component={Home} />
+              <Route path={ROUTES.HOME}>
+                <Home isLoggedIn={this.state.isLoggedIn} toggleGameInProgress={this.toggleGameInProgress}/>
+              </Route>
               <Route path={ROUTES.SIGN_UP} component={SignUp} />
+              <Route path={ROUTES.SIGN_OUT} component={SignOut} />
               <Route path={ROUTES.SIGN_IN}>
                 <SignIn style={{ "color": "red" }} />
               </Route>
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
               <Route path={ROUTES.PLAY}>
-                <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
-                <GameBoard
-                  history={history.boxes}
-                  boxes={current.boxes}
-                  onClick={i => this.handlePlayerClick(i)}
-                  gameOver={this.state.gameOver}
-                  gameType={this.state.gameType}
-                />
+                <Play isLoggedIn={this.state.isLoggedIn} />
               </Route>
               <Route path={ROUTES.ACCOUNT} component={Account} />
               <Route path={ROUTES.ADMIN} component={Admin} />
-              <hr />
-              <Navigation />
             </div>
           </Router>
         </div>
       )
-    }
   }
 }
 

@@ -30,6 +30,12 @@ table {
   justify-content: center;
 }
 
+#start-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #header-instructions {
   background: rgba(0, 255, 100, 0.3);
   font-style: italic;

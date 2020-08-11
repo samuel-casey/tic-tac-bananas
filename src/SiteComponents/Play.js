@@ -1,9 +1,15 @@
 import React from 'react'
-import { StartMenu } from '../Containers/StartMenu'
-import { GameBoard } from '../GameComponents/GameBoard'
 
 import { readRemoteFile } from 'react-papaparse'
 import * as usernamesCSV from '../usernames.csv';
+
+// import Game components
+import { GameBoard } from '../GameComponents/GameBoard';
+import { UndoBtnContainer } from '../Containers/UndoBtnContainer';
+import { StartMenu } from '../Containers/StartMenu.js';
+import { RestartBtnContainer } from '../Containers/RestartBtnContainer.js';
+import { OpponentContainer } from '../Containers/OpponentContainer.js';
+import { Scoreboard } from '../SiteComponents/Scoreboard'
 
 const usernames = []
 
@@ -30,6 +36,16 @@ export class Play extends React.Component {
         }))
 
 
+        /* props {
+        isLoggedIn: "YEAH",
+        activeUser: <firebase users>,
+        activeOpponent: <firebase users>
+        activeUserWins: <firebase DB>
+        activeOpponentWins: <firebase DB>
+        userVsOpponentRecord: <firebase DB>
+        }
+        */ 
+       
         this.state = {
             history: [
                 {
@@ -40,7 +56,7 @@ export class Play extends React.Component {
             turnNumber: 0,
             gameType: null,
             gameOver: false,
-            opponent: null
+            opponent: null,
         }
         this.handlePlayerClick = this.handlePlayerClick.bind(this);
         this.goBack = this.goBack.bind(this)
@@ -265,18 +281,73 @@ export class Play extends React.Component {
             status = this.state.isRedNext ? <p style={{ "background": "rgba(0,0,255,.3)" }}>Blue's turn</p> : <p style={{ "background": "rgba(255,0,0,.3)" }}>Red's turn</p>;
         }
 
-        return (
-            <div>
-                <p>Select an option for how you want to play: </p>
-                <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
-                <GameBoard
-                    history={history.boxes}
-                    boxes={current.boxes}
-                    onClick={() => { return alert('Please choose an option for how you want to play.') }}
-                    gameType={this.state.gameType}
-                />
-              </div>
-        )
+        if (this.state.turnNumber >= 0 && this.state.gameType === "local") {
+            return (
+                <div className="game-container">
+                    <div className="instructions">{status}</div>
+                    <div>{this.state.isLoggedIn}</div>
+                    <GameBoard
+                        history={history.boxes}
+                        boxes={current.boxes}
+                        onClick={i => this.handlePlayerClick(i)}
+                        gameOver={this.state.gameOver}
+                        gameType={this.state.gameType}
+                    />
+                    <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
+                    <br></br>
+                    <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
+                </div>
+            )
+        } else if (this.state.turnNumber >= 0 && this.state.gameType === "bot") {
+            return (
+                <div className="game-container">
+                    <div className="instructions">{status}</div>
+                    <GameBoard
+                        history={history}
+                        boxes={current.boxes}
+                        onClick={i => this.handleBotClick(i)}
+                        gameType={this.state.gameType}
+                        autoPick={this.autoPick}
+                        isRedNext={this.state.isRedNext}
+                        gameOver={this.state.gameOver}
+                    />
+                    <br></br>
+                    <RestartBtnContainer className={'btn'} onClick={this.restartGame} value={"Restart Game"} />
+                    <br></br>
+                    <UndoBtnContainer onClick={this.goBack} value={this.desc} id='undo-container' key='undo-container' />
+                </div>
+            )
+        } else if (this.state.turnNumber >= 0 && this.state.gameType === "online") {
+            const oppUserName = this.state.opponent
+            return (
+                <div className="game-container">
+                    <div>~online~</div>
+                    <div className="instructions">{status}</div>
+                    <GameBoard
+                        history={history.boxes}
+                        boxes={current.boxes}
+                        onClick={i => this.handleBotClick(i)}
+                        gameType={this.state.gameType}
+                        onlinePick={this.onlinePick}
+                        gameOver={this.state.gameOver}
+                    />
+                    <br></br>
+                    <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
+                    <br></br>
+                    <br></br>
+                    <div style={{ "textEmphasis": "bold" }}>Playing against:</div>
+                    <OpponentContainer className={'opponent'} id={'opponent'} value={oppUserName} />
+                    <Scoreboard />
+                </div>
+            )
+        } else {
+            return (
+                <div id="start-menu-cont">
+                    <p>Select an option for how you want to play:</p>
+                    <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
+                </div>
+            )
+        }
     }
 }
 
@@ -306,8 +377,8 @@ const calculateWinner = (boxes) => {
     //CHECK DRAW
     for (let box of boxes) {
         if (box.isFull === true) {
-                    fullBoxCount += 1
-                }
+            fullBoxCount += 1
+        }
     }
 
     if (fullBoxCount === 9) {
