@@ -332,8 +332,6 @@ export class Play extends React.Component {
                         gameOver={this.state.gameOver}
                     />
                     <br></br>
-                    <RestartBtnContainer className={'btn'} value={"Quit and return to Menu"} onClick={this.restartGame} />
-                    <br></br>
                     <br></br>
                     <div style={{ "textEmphasis": "bold" }}>Playing against:</div>
                     <OpponentContainer className={'opponent'} id={'opponent'} value={oppUserName} />
