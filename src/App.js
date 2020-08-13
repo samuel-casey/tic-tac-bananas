@@ -6,7 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-import {handleGoogleLogin} from './index.js'
+// import {handleGoogleLogin} from './index.js'
 
 // import fake usernames and csv parser
 import * as usernamesCSV from './usernames.csv';
@@ -16,8 +16,8 @@ import { readRemoteFile } from 'react-papaparse'
 import * as ROUTES from './constants/routes';
 import { Home } from './SiteComponents/Home'
 import { MyAdmin } from './SiteComponents/Admin';
-import { SignUp } from './SiteComponents/SignUp';
-import { SignIn } from './SiteComponents/SignIn';
+import SignUpPage from './SiteComponents/SignUp';
+import { SignInPage } from './SiteComponents/SignIn';
 import { PasswordForget } from './SiteComponents/PasswordForget';
 import { Account } from './SiteComponents/Account';
 import { Play } from './SiteComponents/Play';
@@ -38,19 +38,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    const boxes = Array(9).fill(null).map((box, index) => ({
-      value: null,
-      className: 'box ',
-      isFull: false,
-      fromTurn: null,
-      boxNo: index
-    }))
-
     // TURN THIS INTO MOBX //
     this.state = {
-      isLoggedIn: false,
-      gameInProgress: false
-    }
+      authUser: null,
+      gameInProgress: false,
+      isLoggedIn: false
+    };
     this.toggleGameInProgress = this.toggleGameInProgress.bind(this)
   }
 
@@ -68,10 +61,10 @@ class App extends React.Component {
             <Route path={ROUTES.HOME}>
               <Home isLoggedIn={this.state.isLoggedIn} gameInProgress={this.state.gameInProgress} toggleGameInProgress={this.toggleGameInProgress}/>
             </Route>
-            <Route path={ROUTES.SIGN_UP} component={SignUp} />
+            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
             <Route path={ROUTES.SIGN_OUT} component={SignOut} />
             <Route path={ROUTES.SIGN_IN}>
-              <SignIn style={{ "color": "red" }} onClick={handleGoogleLogin}/>
+              <SignInPage style={{ "color": "red" }}/>
             </Route>
             <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
             <Route path={ROUTES.PLAY}>
