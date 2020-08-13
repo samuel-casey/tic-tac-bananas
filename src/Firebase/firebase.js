@@ -39,27 +39,23 @@ class Firebase {
         this.auth.currentUser.updatePassword(password);
 
     doGoogleLogin = () => {
-        this.auth.signInWithPopup(this.google).then(function (result) {
+        this
+        .auth
+        .signInWithPopup(this.google)
+        .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
             let token = result.credential.accessToken;
             // The signed-in user info.
             let user = result.user;
-            // ...
-        }).then((user) => {
             console.log(user)
-            this.props.history.push(ROUTES.HOME)
-        })
-        .catch(function (error) {
-            // Handle Errors here.
-            let errorCode = error.code;
-            let errorMessage = error.message;
-            // The email of the user's account used.
-            let email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            let credential = error.credential;
-            // ...
+        }).catch(function (error) {
+          // Handle Errors here.
+          console.log(error)
+          // ...
         });
     }
+
+    
 
     // *** User API ***
 

@@ -24,6 +24,24 @@ table {
   margin: 0 auto;
 }
 
+.auth-nav-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-nav-container, button {
+  width: fit-content;
+}
+
+#home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 #sign-up-form,
 #sign-in-form {
   display: grid;
@@ -51,6 +69,7 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 #header-instructions {

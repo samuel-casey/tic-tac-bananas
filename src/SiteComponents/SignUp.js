@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../Firebase';
+import { compose } from 'recompose'
 
 import GoogleButton from 'react-google-button'
 
@@ -48,6 +49,19 @@ class SignUpFormBase extends React.Component {
   onChange = event => {
     this.setState({[event.target.name]: event.target.value }); 
   };
+
+  googleSubmit = event => {
+    this.props.firebase
+      .doGoogleLogin()
+      .then(user => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME);
+        console.log(user)
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  }
  
   render() {
     const {
@@ -97,15 +111,17 @@ class SignUpFormBase extends React.Component {
         />
         <button disabled={isInvalid} type="submit">Sign Up</button>
  
+        <GoogleButton onClick={this.googleSubmit}/>
+
+        <br></br>
+
         {error && <p>{error.message}</p>} 
       </form>
-      <br></br>
-      <GoogleButton className="google-login" onClick={this.props.firebase.doGoogleLogin}/> 
-
       </div>
     );
   }
 }
+
  
 const SignUpLink = () => (
   <p>
@@ -113,7 +129,10 @@ const SignUpLink = () => (
   </p>
 );
 
-const SignUpForm = withRouter(withFirebase(SignUpFormBase))
+const SignUpForm = compose(
+  withRouter,
+  withFirebase,
+  )(SignUpFormBase);
 
 export default SignUpPage;
 

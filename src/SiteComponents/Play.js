@@ -340,7 +340,7 @@ export class Play extends React.Component {
             )
         } else {
             return (
-                <div id="start-menu-cont">
+                <div id="start-menu-container">
                     <p>Select an option for how you want to play:</p>
                     <StartMenu botCallback={this.vsBot} playerCallback={this.vsPlayer} onlineCallback={this.vsOnline} />
                 </div>
