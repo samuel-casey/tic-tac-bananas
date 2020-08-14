@@ -55,6 +55,15 @@ class SignInFormBase extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleGoogleLogin = (history) => {
+    this.props.firebase
+    .doGoogleLogin()
+    .then((result) => {
+      console.log(result)
+      this.props.history.push(ROUTES.HOME)
+    })
+  }
+
   render() {
     const { email, password, error } = this.state;
 
@@ -86,7 +95,7 @@ class SignInFormBase extends React.Component {
           {error && <p>{error.message}</p>}
         </form>
         <br></br>
-        <GoogleButton className="google-login" onClick={this.props.firebase.doGoogleLogin} />
+        <GoogleButton className="google-login" onClick={() => {this.handleGoogleLogin()}} />
       </div>
 
     );

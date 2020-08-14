@@ -26,7 +26,12 @@ class Firebase {
     // *** Auth API ***
 
     doCreateUserWithEmailAndPassword = (email, password) =>
-        this.auth.createUserWithEmailAndPassword(email, password);
+        this.auth.createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+            return result.user.updateProfile({
+                displayName: document.getElementById('displayName').value
+            })
+        });
 
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
@@ -47,7 +52,6 @@ class Firebase {
             let token = result.credential.accessToken;
             // The signed-in user info.
             let user = result.user;
-            console.log(user)
         }).catch(function (error) {
           // Handle Errors here.
           console.log(error)

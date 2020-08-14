@@ -7,6 +7,7 @@ export const Home = (props) => {
             <div id="home-banana">
                 <img src={HappyBanana} alt="happy-banana" />
             </div>
+            <p>Click 'Play' to start a game. Sign in to keep track of your wins and losses!</p>
         </div>
     )
 }

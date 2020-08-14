@@ -82,11 +82,12 @@ class SignUpFormBase extends React.Component {
       <div className="form-container">
       <form onSubmit={this.onSubmit} id="sign-up-form">
         <input
+          id="displayName"
           name="username"
           value={username}
           onChange={this.onChange}
           type="text"
-          placeholder="Full Name"
+          placeholder="username"
         />
         <input
           name="email"

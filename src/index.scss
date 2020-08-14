@@ -24,6 +24,12 @@ table {
   margin: 0 auto;
 }
 
+#account-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
 .auth-nav-container{
   display: flex;
   flex-direction: column;
