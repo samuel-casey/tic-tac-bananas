@@ -39,13 +39,9 @@ class Firebase {
     doSignOut = () => this.auth.signOut();
 
     doUpdateDisplayName = (newDisplayName) => {
-        this.auth.currentUser.updateProfile({
+        return this.auth.currentUser.updateProfile({
             displayName: newDisplayName
         })
-            .then(() => {
-                return console.log(this.auth.currentUser.displayName)
-            })
-            .catch(error => console.log(error))
     }
 
 
@@ -55,7 +51,7 @@ doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
 
 doGoogleLogin = () => {
-    this
+    return this
         .auth
         .signInWithPopup(this.google)
         .then((result) => {

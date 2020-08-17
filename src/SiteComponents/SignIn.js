@@ -58,7 +58,9 @@ class SignInFormBase extends React.Component {
   handleGoogleLogin = (history) => {
     this.props.firebase
     .doGoogleLogin()
-    this.props.history.push(ROUTES.HOME)
+    .then(() => {
+      this.props.history.push(ROUTES.HOME)
+    })
   }
 
   render() {
