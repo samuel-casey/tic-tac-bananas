@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
-
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose'
@@ -56,7 +55,6 @@ class SignUpFormBase extends React.Component {
       .then(user => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
-        console.log(user)
       })
       .catch(error => {
         this.setState({ error });

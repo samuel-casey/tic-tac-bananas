@@ -30,6 +30,21 @@ table {
   padding: 1em;
 }
 
+.update-field-btn {
+  color: blue;
+  margin: 0.5em;
+  background: none;
+  border: none;
+  font-style: italic;
+  text-decoration: underline;
+
+}
+
+#display-name-container {
+  display: flex;
+  align-items: center;
+}
+
 .auth-nav-container{
   display: flex;
   flex-direction: column;

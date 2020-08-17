@@ -27,24 +27,35 @@ class Firebase {
 
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-            return result.user.updateProfile({
-                displayName: document.getElementById('displayName').value
-            })
-        });
+            .then((result) => {
+                return result.user.updateProfile({
+                    displayName: document.getElementById('displayName').value
+                })
+            });
 
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
 
     doSignOut = () => this.auth.signOut();
 
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+    doUpdateDisplayName = (newDisplayName) => {
+        this.auth.currentUser.updateProfile({
+            displayName: newDisplayName
+        })
+            .then(() => {
+                return console.log(this.auth.currentUser.displayName)
+            })
+            .catch(error => console.log(error))
+    }
 
-    doPasswordUpdate = password =>
-        this.auth.currentUser.updatePassword(password);
 
-    doGoogleLogin = () => {
-        this
+doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+
+doPasswordUpdate = password =>
+    this.auth.currentUser.updatePassword(password);
+
+doGoogleLogin = () => {
+    this
         .auth
         .signInWithPopup(this.google)
         .then((result) => {
@@ -53,19 +64,19 @@ class Firebase {
             // The signed-in user info.
             let user = result.user;
         }).catch(function (error) {
-          // Handle Errors here.
-          console.log(error)
-          // ...
+            // Handle Errors here.
+            console.log(error)
+            // ...
         });
-    }
+}
 
-    
 
-    // *** User API ***
 
-    user = uid => this.db.ref(`users/${uid}`);
+// *** User API ***
 
-    users = () => this.db.ref('users');
+user = uid => this.db.ref(`users/${uid}`);
+
+users = () => this.db.ref('users');
 }
 
 export default Firebase;

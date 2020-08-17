@@ -22,9 +22,8 @@ import { MyAdmin } from './SiteComponents/Admin';
 import SignUpPage from './SiteComponents/SignUp';
 import { SignInPage } from './SiteComponents/SignIn';
 import { PasswordForget } from './SiteComponents/PasswordForget';
-import { Account } from './SiteComponents/Account';
+import { AccountPage } from './SiteComponents/Account';
 import { Play } from './SiteComponents/Play';
-import { Navigation } from './SiteComponents/Navigation'
 
 
 const usernames = []
@@ -89,7 +88,7 @@ class App extends React.Component {
                 <Play isLoggedIn={this.state.isLoggedIn} />
               </Route>
               <Route path={ROUTES.ACCOUNT}  >
-                <Account authUser={this.state.authUser}/>
+                <AccountPage authUser={this.state.authUser}/>
               </Route>
               <Route path={ROUTES.MY_ADMIN} component={MyAdmin} />
             </div>
