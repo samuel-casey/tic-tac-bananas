@@ -1,7 +1,7 @@
 import * as app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-import * as ROUTES from '../constants/routes';
+// import * as ROUTES from '../constants/routes';
 
 const config = {
     apiKey: "AIzaSyDjipWGB6aW0H5x62zFJHuNhwrkzpRO5Sc",
@@ -45,7 +45,11 @@ class Firebase {
     }
 
 
-doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+doPasswordReset = email => this.auth.sendPasswordResetEmail(email)
+.then((email) => {
+    console.log(`fb email ${email}`)
+    document.getElementById('confirm-email').value = email;
+});
 
 doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);

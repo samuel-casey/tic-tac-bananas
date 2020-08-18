@@ -21,9 +21,9 @@ import { Landing } from './SiteComponents/Landing'
 import { MyAdmin } from './SiteComponents/Admin';
 import SignUpPage from './SiteComponents/SignUp';
 import { SignInPage } from './SiteComponents/SignIn';
-import { PasswordForget } from './SiteComponents/PasswordForget';
 import { AccountPage } from './SiteComponents/Account';
 import { Play } from './SiteComponents/Play';
+import { PasswordForgetPage } from './SiteComponents/PasswordForget';
 
 
 const usernames = []
@@ -83,7 +83,7 @@ class App extends React.Component {
               <Route path={ROUTES.SIGN_IN}>
                 <SignInPage style={{ "color": "red" }} />
               </Route>
-              <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+              <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               <Route path={ROUTES.PLAY}>
                 <Play isLoggedIn={this.state.isLoggedIn} />
               </Route>

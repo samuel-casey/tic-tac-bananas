@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose'
 import { isCompositeComponent } from 'react-dom/test-utils';
+import { PasswordForgetForm } from './PasswordForget';
+import PasswordChangeForm from './PasswordChange';
+
 
 
 class AccountPageBase extends React.Component {
@@ -15,19 +18,19 @@ class AccountPageBase extends React.Component {
       newDisplayName: ''
     }
 
-    this.state = { ...INITIAL_STATE}
+    this.state = { ...INITIAL_STATE }
 
     this.showInput = this.showInput.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onNameChange = this.onNameChange.bind(this)
 
-    
+
   }
 
   showInput = event => {
     console.log(document.getElementById('displayName'))
-    
-    this.setState( (state, props) => ({
+
+    this.setState((state, props) => ({
       changeInProgress: !state.changeInProgress
     }))
 
@@ -41,22 +44,18 @@ class AccountPageBase extends React.Component {
 
     this.props.firebase
       .doUpdateDisplayName(newName)
-      .then( () => {
-        this.setState((state,props) => ({
+      .then(() => {
+        this.setState((state, props) => ({
           changeInProgress: !state.changeInProgress
         }))
       })
       .catch(error => console.log(error))
-    
+
     event.preventDefault();
   };
 
   onNameChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-
   }
 
   render() {
@@ -68,12 +67,14 @@ class AccountPageBase extends React.Component {
         <h1>Account</h1>
         <div id="display-name-container">
           <h3 id='displayName'>Display name:&nbsp;</h3>{this.state.changeInProgress ? <input id='newDisplayName' name='newDisplayName' placeholder='new display name' onChange={this.onNameChange}></input> : <h3>{displayName}&nbsp;</h3>}
-          { this.state.changeInProgress ?
+          {this.state.changeInProgress ?
             <button className="submit-update-btn" onClick={this.onSubmit}>Save</button> :
-            <button className="update-field-btn" onClick={this.showInput}>change display name</button> 
+            <button className="update-field-btn" onClick={this.showInput}>change display name</button>
           }
         </div>
         <h4>{`Email: ${userEmail}`}</h4>
+        <PasswordForgetForm />
+        <br></br>
       </div>
     )
   }

@@ -33,6 +33,7 @@ class SignInFormBase extends React.Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    this.loginError = this.loginError.bind(this)
   }
 
   onSubmit = event => {
@@ -57,16 +58,31 @@ class SignInFormBase extends React.Component {
 
   handleGoogleLogin = (history) => {
     this.props.firebase
-    .doGoogleLogin()
-    .then(() => {
-      this.props.history.push(ROUTES.HOME)
-    })
+      .doGoogleLogin()
+      .then(() => {
+        this.props.history.push(ROUTES.HOME)
+      })
+  }
+
+  loginError(error) {
+    let loginError;
+    if (error !== null) {
+      switch (error.message) {
+        case "The password is invalid or the user does not have a password.":
+          return loginError = "The password is invalid or the user does not have a password. If you are attempting to login with a gmail account, please use the 'Sign in with Google' button below";
+        case "There is no user record corresponding to this identifier. The user may have been deleted.":
+          return loginError = "This email is not on file. Please use the sign up link at the bottom of the page."
+        default:
+          return loginError = error.message;
+      }
+    }
   }
 
   render() {
     const { email, password, error } = this.state;
 
     const isInvalid = password === '' || email === '';
+
 
     return (
       <div className="form-container">
@@ -90,11 +106,11 @@ class SignInFormBase extends React.Component {
           <button disabled={isInvalid} type="submit">
             Sign In
         </button>
-
-          {error && <p>{error.message}</p>}
+          {this.loginError(error)}
+          <PasswordForgetLink />
+          <br></br>
+          <GoogleButton className="google-login" onClick={() => { this.handleGoogleLogin() }} />
         </form>
-        <br></br>
-        <GoogleButton className="google-login" onClick={() => {this.handleGoogleLogin()}} />
       </div>
 
     );
