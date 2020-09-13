@@ -1,14 +1,16 @@
-import React from 'react'
-import HappyBanana from './images/transparent-happy-banana.png'
+import React from 'react';
+import HappyBanana from './images/tenor.gif';
 
 export const Home = (props) => {
-    return (
-        <div id="home-container">
-            <div id="home-banana">
-                <img src={HappyBanana} alt="happy-banana" />
-            </div>
-            <p>Click 'Play' to start a game. Sign in to keep track of your wins and losses!</p>
-        </div>
-    )
-}
-
+	return (
+		<div id='home-container'>
+			<div id='home-banana'>
+				<img src={HappyBanana} alt='happy-banana' />
+			</div>
+			<p>
+				Click 'Play' to start a game. Sign in to keep track of your wins and
+				losses!
+			</p>
+		</div>
+	);
+};
